@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [],
+  "routes": [
+    { "pattern": "/approve",  "script": "functions/approve.js" },
+    { "pattern": "/complete", "script": "functions/complete.js" }
+  ]
+}
