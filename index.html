@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+<script>/* Pi sandbox: true only when the app is opened inside the Pi Sandbox (desktop testing at sandbox.minepi.com); false in the Pi Browser. The same code runs as the mainnet and the testnet app: the network comes from the Pi app and its API key. */
+window.PI_SANDBOX=(function(){try{var r=document.referrer||'',a=location.ancestorOrigins?[].slice.call(location.ancestorOrigins).join(' '):'';return /sandbox\.minepi\.com/.test(r+' '+a);}catch(e){return false;}})();</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#020A06">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="description" content="HARAMAIN — The Web3 Pilgrimage Infrastructure for Hajj & Umrah. Pi Network Testnet.">
+<meta name="description" content="HARAMAIN — The Web3 Pilgrimage Infrastructure for Hajj & Umrah. Pi Network Mainnet.">
 <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src * data: blob:; img-src * data: blob:; style-src * 'unsafe-inline'; font-src * data:; frame-src *; frame-ancestors *;">
 <title>HARAMAIN · Web3 Pilgrimage Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1079,27 +1082,8 @@ select.fi{cursor:pointer;}
 .bud-rt{display:flex;align-items:center;gap:.2rem;}
 .bud-in{width:65px;padding:.28rem .35rem;font-size:.63rem;text-align:right;height:auto;}
 .bud-pi{font-size:.55rem;color:var(--gold);font-weight:700;}
-
-/* progress bar */
-.progress-bar{height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:.3rem 0;}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .4s ease;}
-/* skeleton */
-.skel{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:skel 1.5s infinite;border-radius:8px;}
-@keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-/* audio dua list items */
-.audio-dua-item{display:flex;align-items:center;gap:.58rem;padding:.62rem .68rem;border-radius:10px;margin-bottom:.26rem;cursor:pointer;border:1px solid rgba(255,255,255,.06);transition:all .15s;background:rgba(6,20,16,.8);}
-.audio-dua-item:active{transform:scale(.97);}
-.audio-dua-item.cur{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.3);}
-
-/* TESTNET INDICATOR */
-#testnet-bar{position:fixed;bottom:62px;left:0;right:0;z-index:300;
-  background:rgba(52,152,219,.1);border-top:1px solid rgba(52,152,219,.18);
-  text-align:center;font-size:.43rem;font-weight:700;color:#3498DB;
-  padding:.2rem;letter-spacing:.08em;pointer-events:none;}
 </style>
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
@@ -1115,7 +1099,7 @@ select.fi{cursor:pointer;}
     <div class="infra-clock" id="infra-clock">00:00:00</div>
     <div class="infra-status">
       <div class="infra-dot"></div>
-      <span>Pi Testnet Connected</span>
+      <span>Pi Mainnet Connected</span>
     </div>
     <div class="infra-langs">
       <button class="il-btn on" onclick="setLang('en',this)">EN</button>
@@ -1133,9 +1117,9 @@ select.fi{cursor:pointer;}
     <div class="hero-eyebrow">Web3 Pilgrimage Infrastructure</div>
     <div class="hero-title">HARAMAIN</div>
     <div class="hero-subtitle" data-i="subtitle">The Web3 Pilgrimage Infrastructure for Hajj & Umrah</div>
-    <div class="hero-desc" data-i="desc">Combining AI-powered guidance, real-time safety systems, smart worship technology, digital pilgrim infrastructure, and Pi Testnet financial systems into one intelligent Islamic ecosystem for the world.</div>
+    <div class="hero-desc" data-i="desc">Combining AI-powered guidance, real-time safety systems, smart worship technology, digital pilgrim infrastructure, and Pi Mainnet financial systems into one intelligent Islamic ecosystem for the world.</div>
     <div class="hero-indicators">
-      <div class="hi"><div class="hi-dot"></div><div class="hi-txt">Pi Testnet Connected</div></div>
+      <div class="hi"><div class="hi-dot"></div><div class="hi-txt">Pi Mainnet Connected</div></div>
       <div class="hi"><div class="hi-dot"></div><div class="hi-txt">Secure Authentication</div></div>
       <div class="hi"><div class="hi-dot"></div><div class="hi-txt">Real-Time Infrastructure</div></div>
       <div class="hi"><div class="hi-dot"></div><div class="hi-txt">AI Pilgrim Technology</div></div>
@@ -1147,8 +1131,8 @@ select.fi{cursor:pointer;}
     <div class="live-cards">
       <div class="lc">
         <div class="lc-label">💰 Live Pi Value</div>
-        <div class="lc-val" id="lc-pi">$0.17</div>
-        <div class="lc-sub">USD · Testnet</div>
+        <div class="lc-val" id="lc-pi">—</div>
+        <div class="lc-sub">USD · Mainnet</div>
       </div>
       <div class="lc">
         <div class="lc-label">🕌 Next Prayer</div>
@@ -1174,13 +1158,13 @@ select.fi{cursor:pointer;}
       <span class="login-btn-icon">🕋</span>
       <span id="loginBtnText" data-i="signin">Sign In with Pi</span>
     </button>
-    <div class="login-security" data-i="secure_auth">Secure Pi Testnet Authentication · sandbox:true</div>
+    <div class="login-security" data-i="secure_auth">Secure Pi Mainnet Authentication</div>
     <div class="login-status" id="ls-msg"></div>
   </div>
 
   <!-- SECTION 5 — FOOTER -->
   <div class="landing-footer">
-    <div class="lf-powered">Powered by Haramain.pi · Pi Network Testnet</div>
+    <div class="lf-powered">Powered by Haramain.pi · Pi Network Mainnet</div>
     <div class="lf-links">
       <span class="lf-link" onclick="openModal('modal-privacy')">Privacy Policy</span>
       <span class="lf-link" onclick="openModal('modal-terms')">Terms of Service</span>
@@ -1203,7 +1187,7 @@ select.fi{cursor:pointer;}
       <span class="ti" id="tick-hijri">🌙 Hijri date loading...</span>
       <span class="ti" id="tick-prayer">🕌 Prayer times loading...</span>
       <span class="ti" id="tick-weather">🌡️ Makkah weather loading...</span>
-      <span class="ti">💸 Pi Testnet payments · Send · Request · Zakat · Sadaqah · Qurbani</span>
+      <span class="ti">💸 Pi Pass · Send · Request · Zakat calculator</span>
       <span class="ti">🤖 HARAMAIN AI · Powered by Claude · Ask anything about Hajj & Umrah</span>
     </div>
   </div>
@@ -1212,7 +1196,7 @@ select.fi{cursor:pointer;}
   <header id="hdr">
     <div class="hdr-l">
       <div class="hdr-logo">HARAMAIN</div>
-      <div class="hdr-badge" style="background:rgba(52,152,219,.15);color:#3498DB;border:1px solid rgba(52,152,219,.3);">🧪 Testnet</div>
+      <div class="hdr-badge">✅ Mainnet</div>
     </div>
     <div class="hdr-r">
       <span id="greeting-icon" style="font-size:.95rem"></span>
@@ -1296,7 +1280,7 @@ select.fi{cursor:pointer;}
         <button class="qa-btn qa-gold" onclick="goS('payments')">
           <div class="qa-icon">💸</div>
           <div class="qa-title">Send Pi</div>
-          <div class="qa-sub">Real Pi · Testnet</div>
+          <div class="qa-sub">Opens Pi Wallet</div>
         </button>
         <button class="qa-btn qa-green" onclick="goS('payments')">
           <div class="qa-icon">📨</div>
@@ -1617,8 +1601,8 @@ select.fi{cursor:pointer;}
           <div class="pid-av">🕋</div>
           <div class="pid-name" id="pid-name">—</div>
           <div class="pid-serial" id="pid-serial">Pilgrim ID #—</div>
-          <div class="pid-uid" id="pid-uid">HARAMAIN · Pi Network · Testnet</div>
-          <div class="pid-badges"><span class="pbadge pb-main">✅ Testnet</span><span class="pbadge pb-prem" id="pid-prem" style="display:none">⭐ Pilgrim Pass</span><span class="pbadge pb-lvl" id="pid-lvl">🕋 Pilgrim</span></div>
+          <div class="pid-uid" id="pid-uid">HARAMAIN · Pi Network · Mainnet</div>
+          <div class="pid-badges"><span class="pbadge pb-main">✅ Mainnet</span><span class="pbadge pb-prem" id="pid-prem" style="display:none">⭐ Pilgrim Pass</span><span class="pbadge pb-lvl" id="pid-lvl">🕋 Pilgrim</span></div>
           <div class="pid-stats">
             <div class="ps"><div class="ps-n" id="pid-pts">0</div><div class="ps-l">Points</div></div>
             <div class="ps"><div class="ps-n" id="pid-tawaf">0</div><div class="ps-l">Tawaf</div></div>
@@ -1697,7 +1681,7 @@ select.fi{cursor:pointer;}
     <!-- ══ PAYMENTS SCREEN ══ -->
     <section class="scr" id="s-payments">
       <div class="scr-hdr">
-        <div><div class="scr-hdr-title">Pi Payments</div><div class="scr-hdr-sub">Testnet · sandbox:true · Test Pi</div></div>
+        <div><div class="scr-hdr-title">Pi Payments</div><div class="scr-hdr-sub">Mainnet · Real Pi</div></div>
       </div>
 
       <!-- Wallet -->
@@ -1707,7 +1691,7 @@ select.fi{cursor:pointer;}
           <div>
             <div class="wh-name" id="wc-name">—</div>
             <div class="wh-pid" id="wc-serial">Pilgrim ID: Loading...</div>
-            <div class="wh-net">Pi Network · Testnet · sandbox:true</div>
+            <div class="wh-net">Pi Network · Mainnet</div>
             <div class="wh-live"><div class="live-dot"></div>Connected · Real Pi</div>
           </div>
         </div>
@@ -1726,7 +1710,7 @@ select.fi{cursor:pointer;}
           <div class="fg"><label class="flbl">Amount (π)</label><input class="fi" type="number" id="send-amt" value="0.1" min="0.001" step="0.001"></div>
           <div class="fg"><label class="flbl">Memo</label><input class="fi" type="text" id="send-memo" placeholder="e.g. Hajj support"></div>
         </div>
-        <button class="btn" onclick="sendPi()">💸 Send Pi · Testnet</button>
+        <button class="btn" onclick="sendPi()">💸 Send Pi · Mainnet</button>
       </div>
 
       <!-- Request Pi -->
@@ -1743,16 +1727,16 @@ select.fi{cursor:pointer;}
       <!-- More Payment Tools -->
       <div class="sec-label">🤲 Charitable Payments</div>
       <div class="tgrid">
-        <div class="tc tc-green" onclick="oUtil('zakat')"><span class="tc-icon">🤲</span><div class="tc-name">Zakat Calculator</div><div class="tc-desc">Calculate & send in Pi</div></div>
-        <div class="tc tc-purple" onclick="oUtil('sadaqah')"><span class="tc-icon">💝</span><div class="tc-name">Sadaqah in Pi</div><div class="tc-desc">Instant charity · 5 causes</div></div>
-        <div class="tc tc-red" onclick="oUtil('qurbani')"><span class="tc-icon">🐑</span><div class="tc-name">Qurbani</div><div class="tc-desc">Eid sacrifice · pay in Pi</div></div>
+        <div class="tc tc-green" onclick="oUtil('zakat')"><span class="tc-icon">🤲</span><div class="tc-name">Zakat Calculator</div><div class="tc-desc">Calculate what is due</div></div>
+        <div class="tc tc-purple" onclick="oUtil('sadaqah')"><span class="tc-icon">💝</span><div class="tc-name">Sadaqah in Pi</div><div class="tc-desc">Where and how to give</div></div>
+        <div class="tc tc-red" onclick="oUtil('qurbani')"><span class="tc-icon">🐑</span><div class="tc-name">Qurbani</div><div class="tc-desc">How to arrange your sacrifice</div></div>
         <div class="tc tc-gold" onclick="oUtil('pi-calc')"><span class="tc-icon" style="font-family:var(--dm)">π</span><div class="tc-name">Pi Calculator</div><div class="tc-desc">π → SAR · USD · GBP · PKR</div></div>
       </div>
 
       <!-- Payment Utility Pages -->
       <div class="up" id="up-zakat">
         <div class="up-hdr"><button class="back-btn" onclick="cUtil()">←</button><div class="up-title">🤲 Zakat Calculator</div></div>
-        <div class="ibox">Calculate Zakat on your Pi holdings and send directly to verified causes.</div>
+        <div class="ibox">Calculate the Zakat due on your Pi holdings, then give it through a trusted charity or your local mosque.</div>
         <div class="ic">
           <div class="ic-title">Calculate Your Zakat</div>
           <div class="fg"><label class="flbl">Your Pi Holdings (π)</label><input class="fi" type="number" id="zk-pi" placeholder="e.g. 1000" oninput="calcZakat()"></div>
@@ -2974,7 +2958,7 @@ select.fi{cursor:pointer;}
       <div style="text-align:center;padding:1rem 0 .5rem">
         <div style="font-family:var(--serif);font-size:1.1rem;color:var(--gold2);letter-spacing:.12em">HARAMAIN</div>
         <div style="font-size:.5rem;color:var(--gold);letter-spacing:.1em;margin:.15rem 0">haramain.pi</div>
-        <div style="font-size:.44rem;color:var(--t4)">© 2026 HARAMAIN · Pi Network Testnet</div>
+        <div style="font-size:.44rem;color:var(--t4)">© 2026 HARAMAIN · Pi Network Mainnet</div>
       </div>
     </section>
 
@@ -2990,16 +2974,14 @@ select.fi{cursor:pointer;}
 </div><!-- end app -->
 
 <div id="toast"></div>
-<div id="testnet-bar">🧪 TESTNET · sandbox:true · Test Pi · Not Real Currency</div>
 
-<!-- ✅ HARAMAIN SCRIPT — TESTNET · sandbox:true · All inline -->
+<!-- ✅ HARAMAIN SCRIPT — MAINNET · All inline -->
 <script>
 /* ════════════════════════════════════════════════════════════
-   HARAMAIN PAYMENT SYSTEM — Pi Network Testnet
+   HARAMAIN PAYMENT SYSTEM — Pi Network Mainnet
    Platform: Cloudflare Pages
    Endpoints: /functions/approve · /functions/complete
-   Pattern: WorldCup proven working pattern
-   sandbox: true — TESTNET ONLY
+   Pattern: WorldCup proven working pattern — MAINNET ONLY
    
    CRITICAL RULES:
    1. Use function() not async function() in callbacks
@@ -3009,15 +2991,15 @@ select.fi{cursor:pointer;}
    5. Always return the fetch promise from approval
 ════════════════════════════════════════════════════════════ */
 
-/* ── Pi SDK: Testnet Initialization ── */
+/* ── Pi SDK: Mainnet Initialization ── */
 /* ── Smart Endpoint Detection ── */
 /* ── Cloudflare Pages Endpoints ── */
 var _APPROVE  = '/approve';
 var _COMPLETE = '/complete';
 var _CANCEL   = '/cancel-payment';
-console.log('[Haramain] Testnet sandbox:true | endpoint:', _APPROVE);
+console.log('[Haramain] Mainnet | endpoint:', _APPROVE);
 
-console.log('[Haramain] Testnet · sandbox:true · approve endpoint:', _APPROVE);
+console.log('[Haramain] Mainnet · approve endpoint:', _APPROVE);
 
 /* ── onIncompletePayment ── */
 function onIncompletePayment(payment) {
@@ -3047,7 +3029,7 @@ function buyPrem() {
   Pi.createPayment({
     amount: 1,
     memo: 'Haramain Pilgrim Pass — Premium Access',
-    metadata: { type: 'pilgrim_pass', app: 'haramain.pi', network: 'testnet' }
+    metadata: { type: 'pilgrim_pass', app: 'haramain.pi', network: 'mainnet' }
   }, {
     onReadyForServerApproval: function(paymentId) {
       console.log('[Haramain] Approving payment:', paymentId);
@@ -3106,7 +3088,7 @@ function sendPi() {
 
   Pi.createPayment({
     amount: amt, memo: memo,
-    metadata: { type: 'send_pi', to: to, app: 'haramain.pi', network: 'testnet' }
+    metadata: { type: 'send_pi', to: to, app: 'haramain.pi', network: 'mainnet' }
   }, {
     onReadyForServerApproval: function(paymentId) {
       console.log('[Haramain] Approving send:', paymentId);
@@ -3145,7 +3127,7 @@ function sendZakat() {
   Pi.createPayment({
     amount: amt,
     memo: 'Haramain Zakat — In the path of Allah',
-    metadata: { type: 'zakat', app: 'haramain.pi', network: 'testnet' }
+    metadata: { type: 'zakat', app: 'haramain.pi', network: 'mainnet' }
   }, {
     onReadyForServerApproval: function(paymentId) {
       console.log('[Haramain] Approving Zakat:', paymentId);
@@ -3186,7 +3168,7 @@ function sendSadaqah(cause, amt) {
   Pi.createPayment({
     amount: amt,
     memo: 'Haramain Sadaqah — ' + cause,
-    metadata: { type: 'sadaqah', cause: cause, app: 'haramain.pi', network: 'testnet' }
+    metadata: { type: 'sadaqah', cause: cause, app: 'haramain.pi', network: 'mainnet' }
   }, {
     onReadyForServerApproval: function(paymentId) {
       console.log('[Haramain] Approving Sadaqah:', paymentId);
@@ -3228,7 +3210,7 @@ function orderQurbani() {
   Pi.createPayment({
     amount: amt,
     memo: 'Haramain Qurbani — ' + animal + ' · ' + country,
-    metadata: { type: 'qurbani', animal: animal, country: country, app: 'haramain.pi', network: 'testnet' }
+    metadata: { type: 'qurbani', animal: animal, country: country, app: 'haramain.pi', network: 'mainnet' }
   }, {
     onReadyForServerApproval: function(paymentId) {
       console.log('[Haramain] Approving Qurbani:', paymentId);
@@ -3277,7 +3259,7 @@ function requestPi() {
 
 
 /* ================================================================
-   HARAMAIN · script.js · Pi Network · TESTNET · sandbox:true
+   HARAMAIN · script.js · Pi Network · MAINNET
    The Web3 Pilgrimage Infrastructure for Hajj & Umrah
    Ultra Premium · Government-Grade · Global Platform
    ✅ Payments copied EXACTLY from WorldCup proven system
@@ -3291,9 +3273,9 @@ var K = 'hm_v1_';
 var LANGS = {
   en: {
     subtitle: 'The Web3 Pilgrimage Infrastructure for Hajj & Umrah',
-    desc: 'Combining AI-powered guidance, real-time safety systems, smart worship technology, digital pilgrim infrastructure, and Pi Testnet financial systems into one intelligent Islamic ecosystem for the world.',
+    desc: 'Combining AI-powered guidance, real-time safety systems, smart worship technology, digital pilgrim infrastructure, and Pi Mainnet financial systems into one intelligent Islamic ecosystem for the world.',
     signin: 'Sign In with Pi',
-    secure_auth: 'Secure Pi Testnet Authentication · sandbox:true',
+    secure_auth: 'Secure Pi Mainnet Authentication',
     good_morning: 'Good Morning', good_afternoon: 'Good Afternoon', good_evening: 'Good Evening',
     welcome: 'May Allah accept your Hajj',
     next_prayer: 'Next Prayer', prayer_times: 'Prayer Times',
@@ -3306,7 +3288,7 @@ var LANGS = {
     subtitle: 'البنية التحتية لحج وعمرة الجيل التالي',
     desc: 'تجمع بين التوجيه بالذكاء الاصطناعي وأنظمة السلامة الفورية وتقنيات العبادة الذكية والبنية التحتية الرقمية للحجاج وأنظمة مدفوعات Pi الرئيسية في نظام إسلامي ذكي واحد للعالم.',
     signin: 'تسجيل الدخول بـ Pi',
-    secure_auth: 'مصادقة آمنة عبر Pi Testnet',
+    secure_auth: 'مصادقة آمنة عبر Pi Mainnet',
     good_morning: 'صباح الخير', good_afternoon: 'مساء الخير', good_evening: 'مساء النور',
     welcome: 'تقبل الله حجك',
     next_prayer: 'الصلاة القادمة', prayer_times: 'مواقيت الصلاة',
@@ -3317,9 +3299,9 @@ var LANGS = {
   },
   ha: {
     subtitle: 'Tsarin Aikin Hajji da Umrah na Web3',
-    desc: 'Haɗawa da jagorancin AI, tsarin aminci na ainihi, fasaha ta ibada mai wayo, kayayyakin aikin hajji na dijital, da tsarin biyan kuɗi na Pi Testnet cikin tsarin Islama ɗaya mai hankali.',
+    desc: 'Haɗawa da jagorancin AI, tsarin aminci na ainihi, fasaha ta ibada mai wayo, kayayyakin aikin hajji na dijital, da tsarin biyan kuɗi na Pi Mainnet cikin tsarin Islama ɗaya mai hankali.',
     signin: 'Shiga da Pi',
-    secure_auth: 'Tsaro na Pi Testnet · Ina aiki',
+    secure_auth: 'Tsaro na Pi Mainnet · Ina aiki',
     good_morning: 'Ina kwana', good_afternoon: 'Ina wuni', good_evening: 'Ina yini',
     welcome: 'Allah ya karbi Hajjinka',
     next_prayer: 'Salla Mai Zuwa', prayer_times: 'Lokutan Salla',
@@ -3330,9 +3312,9 @@ var LANGS = {
   },
   ur: {
     subtitle: 'حج و عمرہ کے لیے Web3 حج انفراسٹرکچر',
-    desc: 'AI رہنمائی، ریئل ٹائم سیفٹی سسٹم، سمارٹ عبادت ٹیکنالوجی، ڈیجیٹل حاجی انفراسٹرکچر، اور Pi Testnet مالیاتی نظام کو ایک ذہین اسلامی ایکوسسٹم میں یکجا کرتا ہے۔',
+    desc: 'AI رہنمائی، ریئل ٹائم سیفٹی سسٹم، سمارٹ عبادت ٹیکنالوجی، ڈیجیٹل حاجی انفراسٹرکچر، اور Pi Mainnet مالیاتی نظام کو ایک ذہین اسلامی ایکوسسٹم میں یکجا کرتا ہے۔',
     signin: 'Pi سے سائن ان کریں',
-    secure_auth: 'محفوظ Pi Testnet تصدیق',
+    secure_auth: 'محفوظ Pi Mainnet تصدیق',
     good_morning: 'صبح بخیر', good_afternoon: 'دوپہر بخیر', good_evening: 'شام بخیر',
     welcome: 'اللہ آپ کا حج قبول فرمائے',
     next_prayer: 'اگلی نماز', prayer_times: 'نماز کے اوقات',
@@ -3343,9 +3325,9 @@ var LANGS = {
   },
   id: {
     subtitle: 'Infrastruktur Haji & Umrah Web3 Global',
-    desc: 'Menggabungkan panduan AI, sistem keselamatan real-time, teknologi ibadah cerdas, infrastruktur jemaah digital, dan sistem pembayaran Pi Testnet dalam satu ekosistem Islam yang cerdas.',
+    desc: 'Menggabungkan panduan AI, sistem keselamatan real-time, teknologi ibadah cerdas, infrastruktur jemaah digital, dan sistem pembayaran Pi Mainnet dalam satu ekosistem Islam yang cerdas.',
     signin: 'Masuk dengan Pi',
-    secure_auth: 'Autentikasi Aman Pi Testnet',
+    secure_auth: 'Autentikasi Aman Pi Mainnet',
     good_morning: 'Selamat Pagi', good_afternoon: 'Selamat Siang', good_evening: 'Selamat Malam',
     welcome: 'Semoga Allah menerima Haji Anda',
     next_prayer: 'Sholat Berikutnya', prayer_times: 'Waktu Sholat',
@@ -3356,9 +3338,9 @@ var LANGS = {
   },
   tr: {
     subtitle: 'Hac & Umre İçin Web3 Hac Altyapısı',
-    desc: 'Yapay zeka rehberliği, gerçek zamanlı güvenlik sistemleri, akıllı ibadet teknolojisi, dijital hac altyapısı ve Pi Testnet finansal sistemlerini tek bir akıllı İslam ekosisteminde birleştiriyor.',
+    desc: 'Yapay zeka rehberliği, gerçek zamanlı güvenlik sistemleri, akıllı ibadet teknolojisi, dijital hac altyapısı ve Pi Mainnet finansal sistemlerini tek bir akıllı İslam ekosisteminde birleştiriyor.',
     signin: 'Pi ile Giriş Yap',
-    secure_auth: 'Güvenli Pi Testnet Kimlik Doğrulama',
+    secure_auth: 'Güvenli Pi Mainnet Kimlik Doğrulama',
     good_morning: 'Günaydın', good_afternoon: 'İyi öğleden sonralar', good_evening: 'İyi akşamlar',
     welcome: 'Allah haccınızı kabul etsin',
     next_prayer: 'Sonraki Namaz', prayer_times: 'Namaz Vakitleri',
@@ -3609,8 +3591,8 @@ function piLogin() {
 
   if (typeof Pi !== 'undefined') {
 
-    /* 🧪 TESTNET — sandbox:true */
-    Pi.init({ version: "2.0", sandbox: true });
+    /* ✅ MAINNET */
+    Pi.init({ version: "2.0", sandbox: window.PI_SANDBOX });
 
     Pi.authenticate(['username', 'payments'], onIncompletePayment)
       .then(function(auth) {
@@ -3668,7 +3650,7 @@ function launchApp() {
     getGreetingIcon()+' '+getGreeting()+'! Welcome to HARAMAIN — The Web3 Pilgrimage Infrastructure · haramain.pi',
     'now'
   );
-  console.log('[Haramain] ✅ App launched · sandbox: true · user:', user ? user.username : 'Demo');
+  console.log('[Haramain] ✅ App launched · user:', user ? user.username : 'Demo');
 }
 
 function logout() {
@@ -3701,7 +3683,7 @@ function renderPilgrimId(){
   var u=user?user.username:'Pilgrim'; var lv=getLevel();
   ['pid-name'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=u;});
   var ps=document.getElementById('pid-serial');if(ps)ps.textContent='Pilgrim ID #'+mySerial;
-  var pu=document.getElementById('pid-uid');if(pu)pu.textContent='HARAMAIN · Pi Network · Testnet';
+  var pu=document.getElementById('pid-uid');if(pu)pu.textContent='HARAMAIN · Pi Network · Mainnet';
   var pl=document.getElementById('pid-lvl');if(pl)pl.textContent=lv.i+' '+lv.n;
   var pp=document.getElementById('pid-prem');if(pp)pp.style.display=localStorage.getItem(K+'prem')==='1'?'inline-block':'none';
   var fpt=document.getElementById('pid-pts');if(fpt)fpt.textContent=pts;
@@ -4858,14 +4840,14 @@ function generateReceipt(txData) {
   el.innerHTML =
     '<div class="receipt-box">' +
       '<div class="receipt-logo">🕋 HARAMAIN</div>' +
-      '<div style="font-family:var(--dm);font-size:.5rem;color:var(--t3);margin-bottom:.7rem">Pi Network Testnet · Official Payment Receipt</div>' +
+      '<div style="font-family:var(--dm);font-size:.5rem;color:var(--t3);margin-bottom:.7rem">Pi Network Mainnet · Official Payment Receipt</div>' +
       '<div class="receipt-line"><span class="rk">Receipt ID</span><span class="rv">' + receiptId + '</span></div>' +
       '<div class="receipt-line"><span class="rk">Amount</span><span class="rv" style="color:var(--gold);font-size:.75rem;font-weight:700">' + (txData.amount||'') + 'π</span></div>' +
       '<div class="receipt-line"><span class="rk">Type</span><span class="rv">' + (txData.type||'Payment') + '</span></div>' +
       '<div class="receipt-line"><span class="rk">Description</span><span class="rv">' + (txData.memo||txData.cause||'') + '</span></div>' +
       '<div class="receipt-line"><span class="rk">Pilgrim ID</span><span class="rv">' + (txData.pilgrimId||myPilgrimId) + '</span></div>' +
       '<div class="receipt-line"><span class="rk">Username</span><span class="rv">@' + (txData.username||(user?user.username:'Pilgrim')) + '</span></div>' +
-      '<div class="receipt-line"><span class="rk">Network</span><span class="rv">Pi Testnet · sandbox:true</span></div>' +
+      '<div class="receipt-line"><span class="rk">Network</span><span class="rv">Pi Mainnet</span></div>' +
       '<div class="receipt-line"><span class="rk">Transaction ID</span><span class="rv">' + (txData.txid||'').slice(0,20) + '...</span></div>' +
       '<div class="receipt-line"><span class="rk">Date & Time</span><span class="rv">' + now + '</span></div>' +
       '<div class="receipt-line"><span class="rk">Status</span><span class="rv" style="color:var(--grn)">✅ CONFIRMED · Blockchain Verified</span></div>' +
@@ -4896,7 +4878,7 @@ function getReceiptText(rid, amt, memo, txid) {
     'Description: ' + memo + '\n' +
     'Pilgrim ID: ' + myPilgrimId + '\n' +
     'Transaction: ' + txid + '...\n' +
-    'Network: Pi Testnet · sandbox:true\n' +
+    'Network: Pi Mainnet\n' +
     'Status: ✅ Confirmed & Blockchain Verified\n' +
     '━━━━━━━━━━━━━━━━━━━\n' +
     'Powered by Haramain.pi · ' + new Date().toLocaleString();
@@ -5292,7 +5274,7 @@ function renderTx() {
 }
 
 function shareTxWhatsApp(txText) {
-  var text = '🕋 HARAMAIN Payment\n' + txText + '\nPowered by Haramain.pi · Pi Network Testnet';
+  var text = '🕋 HARAMAIN Payment\n' + txText + '\nPowered by Haramain.pi · Pi Network Mainnet';
   window.open('https://wa.me/?text=' + encodeURIComponent(text));
 }
 
@@ -5369,7 +5351,7 @@ addTx = function(text) {
    WorldCup pattern + immediate execution for Pi Browser compat
 ══════════════════════════════════════════════════════════════ */
 function _haramainInit() {
-  /* ✅ Pi SDK init — TESTNET · sandbox:true */
+  /* ✅ Pi SDK init — MAINNET */
   if (typeof Pi !== 'undefined') {
     try { } catch(e) {}
   }
@@ -5384,7 +5366,7 @@ function _haramainInit() {
   /* Start live landing data */
   fetchLandingData();
   applyI18n();
-  console.log('[HARAMAIN] ✅ Ready · sandbox:true · Testnet · ' + new Date().toLocaleTimeString());
+  console.log('[HARAMAIN] ✅ Ready · Mainnet · ' + new Date().toLocaleTimeString());
 }
 
 
@@ -5729,7 +5711,7 @@ function checkFirstVisit() {
   localStorage.setItem(K+'visited', '1');
   setTimeout(function() {
     addNotif('🕋', 'Welcome to HARAMAIN!', 'Start by exploring: Dashboard for prayer times → Worship for ritual tools → Guide for step-by-step Hajj guidance → AI Guide for questions.', 'now');
-    addNotif('💸', 'Pi Payments Active', 'HARAMAIN runs on Pi Network Testnet. Go to Profile to unlock Pilgrim Pass (1π) for premium features.', 'now');
+    addNotif('💸', 'Pi Payments Active', 'HARAMAIN runs on Pi Network Mainnet. Go to Profile to unlock Pilgrim Pass (1π) for premium features.', 'now');
     addNotif('📍', 'Privacy First', 'Your health data and location stay on your device. Nothing is sent to servers without your permission.', 'now');
   }, 2000);
 }
@@ -5758,7 +5740,7 @@ function shareApp() {
     '📍 Prayer times · Qibla · Hajj guide · AI assistant · Pi payments\n' +
     '👤 My Pilgrim ID: ' + myPilgrimId + '\n\n' +
     '🔗 Get it: https://haramain.pages.dev\n' +
-    'Or search "Haramain" in Pi Browser · Pi Network Testnet · haramain.pi';
+    'Or search "Haramain" in Pi Browser · Pi Network Mainnet · haramain.pi';
   if (navigator.share) {
     navigator.share({ title: 'HARAMAIN — Web3 Pilgrimage Platform', text: text }).catch(function(){});
   } else {
@@ -5770,11 +5752,10 @@ function shareApp() {
 
 /* ── UPGRADE 15: PI VALUE on landing ── */
 function fetchPiValue() {
-  // Pi Network doesn't have public API — use placeholder with disclaimer
-  var el = document.getElementById('lc-pi');
+    var el = document.getElementById('lc-pi');
   if (el) {
-    el.textContent = '$0.17';
-    el.title = 'Pi price is indicative. Check Pi app for current value.';
+    el.textContent = '—';   /* shown until the live price arrives; never a made-up number */
+    el.title = 'Live Pi price';
   }
   // Try to get from community source
   fetch('https://api.coinpaprika.com/v1/tickers/pi-pi-network')
@@ -5826,7 +5807,7 @@ function shareProfile() {
     '🕋 Tawaf: ' + tawafHistory.length + ' completed\n' +
     '📿 Total Dhikr: ' + dhikrTotal + '\n' +
     '🔥 Streak: ' + streak + ' days\n\n' +
-    'Powered by Haramain.pi · Pi Network Testnet';
+    'Powered by Haramain.pi · Pi Network Mainnet';
   if (navigator.share) {
     navigator.share({ title: 'HARAMAIN Pilgrim Profile', text: text }).catch(function(){});
   } else if (navigator.clipboard) {
@@ -7323,7 +7304,7 @@ function buildRefMessage() {
     '🌍 6 Languages · Works offline\n\n' +
     'Open in Pi Browser:\n' + getRefLink() + '\n\n' +
     'Hajj 2026 · June 17 · 3 Million Pilgrims\n' +
-    'Powered by Haramain.pi · Pi Network Testnet';
+    'Powered by Haramain.pi · Pi Network Mainnet';
 }
 
 /* Render promo messages in reseller screen */
@@ -7410,11 +7391,11 @@ console.log('[HARAMAIN] ✅ All 25 upgrades loaded · Payment untouched · Ready
 /* ════════════════════════════════════════════════════════════
    Pi Ad Network Integration
    Terms: https://socialchain.app/tos
-   Requirements: 1,000+ daily users · KYC complete · Testnet
+   Requirements: 1,000+ daily users · KYC complete · Mainnet
    ════════════════════════════════════════════════════════════
    
    IMPORTANT: Pi Ads SDK is loaded via Pi Browser natively.
-   The Pi.Ads API is available after Pi.init() on Testnet.
+   The Pi.Ads API is available after Pi.init() on Mainnet.
    You do NOT load a separate SDK — Pi Browser injects it.
    
    Pi Ad Network:
@@ -7432,12 +7413,12 @@ console.log('[HARAMAIN] ✅ All 25 upgrades loaded · Payment untouched · Ready
 function initPiAds() {
   if (typeof Pi === 'undefined') return;
   
-  /* Pi Ads are enabled automatically on Testnet */
+  /* Pi Ads are enabled automatically on Mainnet */
   /* once your app reaches 1,000+ daily active users */
   /* and you pass KYC on develop.pi */
   
   /* Log ad network status for developer reference */
-  console.log('[HARAMAIN] Pi Ad Network: Testnet · sandbox:true');
+  console.log('[HARAMAIN] Pi Ad Network: Mainnet');
   console.log('[HARAMAIN] Ad containers registered · Awaiting 1K daily users');
   
   /* Create ad containers in designated slots */
@@ -7642,7 +7623,7 @@ var _DL5=[
   {n:'Farewell Tawaf',a:'اللَّهُمَّ هَذَا الْبَيْتُ',t:'Allahumma hadhal baytu baytuk'},
 ];
 var _di5=0;
-
+function initAudioDuas(){_rdp5();_rdl5();}
 function _rdp5(){
   var d=_DL5[_di5];if(!d)return;
   var nm=document.getElementById('audio-now-name');if(nm)nm.textContent=d.n;
@@ -7706,7 +7687,7 @@ function askAI(msg){
   td.innerHTML='<div class="ai-msg-who">Haramain AI</div><div class="ai-typing"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>';
   chat.appendChild(td);chat.scrollTop=chat.scrollHeight;
   _AIH5.push({role:'user',content:msg});
-  fetch('https://api.anthropic.com/v1/messages',{
+  fetch('/ai',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,
       system:'You are Haramain AI, expert Islamic pilgrimage guide on haramain.pi (Pi Network). Help with Hajj, Umrah, duas, safety. Be concise, compassionate. Respond in user language.',
@@ -7744,7 +7725,35 @@ function _aiW5(){
 }
 
 /* Receipt */
-
+function showReceipt(txt){
+  var rid='TXN-'+Date.now().toString(36).toUpperCase();
+  var rd=new Date().toLocaleString();
+  var ru=(typeof user!=='undefined'&&user)?'@'+user.username:'@pilgrim';
+  var rp=(typeof myPilgrimId!=='undefined'&&myPilgrimId)?myPilgrimId:'HRM-00000';
+  var modal=document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:1rem;';
+  modal.id='rcpt5';
+  modal.innerHTML='<div style="background:var(--bg2);border:1px solid var(--gbrd);border-radius:20px;padding:1.4rem;width:100%;max-width:300px;text-align:center">'+
+    '<div style="font-size:2.2rem;margin-bottom:.38rem">??</div>'+
+    '<div style="font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--gold2)">Transaction Receipt</div>'+
+    '<div style="font-family:monospace;font-size:.5rem;color:var(--t3);margin:.22rem 0 .68rem">'+rid+'</div>'+
+    '<div style="background:var(--bg3);border-radius:10px;padding:.75rem;margin-bottom:.72rem;text-align:left">'+
+      '<div style="font-size:.62rem;font-weight:600;color:var(--t1);margin-bottom:.32rem">'+String(txt).replace(/</g,'&lt;')+'</div>'+
+      '<div style="font-size:.49rem;color:var(--t3)">?? '+rd+'</div>'+
+      '<div style="font-size:.49rem;color:var(--t3)">?? '+ru+'</div>'+
+      '<div style="font-size:.49rem;color:var(--t3)">?? '+rp+'</div>'+
+      '<div style="font-size:.49rem;color:var(--t3)">?? haramain.pi · Pi Mainnet</div>'+
+    '</div>'+
+    '<div style="display:flex;gap:.38rem">'+
+      '<button class="btn btn-gold btn-sm" style="flex:1" onclick="_shr5()">?? Share</button>'+
+      '<button class="btn btn-ghost btn-sm" style="flex:1" onclick="docuck="_closeRcpt5()">✕ Close</button>'+
+    '</div></div>';
+  document.body.appendChild(modal);
+  modal._d={id:rid,text:txt,date:rd,user:ru};
+  var recs=JSON.parse(localStorage.getItem(K+'receipts')||'[]');
+  recs.unshift({id:rid,text:txt,date:rd});if(recs.length>100)recs.pop();
+  localStorage.setItem(K+'receipts',JSON.stringify(recs));
+}
 
 function _closeRcpt5(){var m=document.getElementById('rcpt5');if(m)m.remove();}
 function _shr5(){
@@ -7792,6 +7801,8 @@ function shareTracker(){
   if(navigator.share){navigator.share({title:'My Location',text:msg});}
   else{if(typeof copyClip==='function')copyClip(msg);if(typeof toast==='function')toast('Location copied');}
 }
+/* family group saved on this device (was used before being declared) */
+var _fam5=(function(){try{return JSON.parse(localStorage.getItem('hm_v1_fam5')||'null')||{};}catch(e){return {};}})();
 function createFamilyGroup(){
   var name=((typeof user!=='undefined'&&user)?user.username:'Pilgrim')+' Family';
   var id='GRP-'+Math.random().toString(36).substr(2,6).toUpperCase();
@@ -7835,7 +7846,16 @@ var _trMap={
   fr:{n:'French',p:{'Where is the toilet?':'Ou sont les toilettes?','I need help':'J ai besoin d aide','I am lost, please help':'Je suis perdu','How much does this cost?':'Combien ca coute?'}},
 };
 function setTrLang(c){_trLang=c;var n=_trMap[c];if(typeof toast==='function')toast((n?n.n:c)+' selected');}
-
+function doTr(){
+  var inp=document.getElementById('tr-inp');if(!inp||!inp.value.trim())return;
+  var txt=inp.value.trim();
+  var lang=_trMap[_trLang];
+  var result=lang&&lang.p[txt]?lang.p[txt]:'['+_trLang.toUpperCase()+'] '+txt;
+  var out=document.getElementById('tr-out'),res=document.getElementById('tr-res'),lbl=document.getElementById('tr-lbl');
+  if(out)out.style.display='block';
+  if(res){res.textContent=result;res.style.direction=(_trLang==='ar'||_trLang==='ur')?'rtl':'ltr';}
+  if(lbl&&lang)lbl.textContent=lang.n.toUpperCase();
+}
 function quickTr(p){var inp=document.getElementById('tr-inp');if(inp)inp.value=p;doTr();}
 function speakTr(){var res=document.getElementById('tr-res');if(!res||res.textContent==='--')return;if('speechSynthesis' in window){speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(res.textContent);u.rate=0.82;speechSynthesis.speak(u);}else{if(typeof toast==='function')toast(res.textContent);}}
 
@@ -7943,7 +7963,7 @@ function showReceipt(txt) {
     '<div id="rcpt-card" style="background:linear-gradient(160deg,#061410,#0E2419);border:1px solid rgba(201,168,76,.35);border-radius:20px;padding:1.4rem 1.3rem;width:100%;max-width:290px;">' +
       '<div style="text-align:center;border-bottom:1px solid rgba(201,168,76,.15);padding-bottom:.7rem;margin-bottom:.7rem;">' +
         '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.15rem;font-weight:700;color:#E2C46A;letter-spacing:.12em">HARAMAIN</div>' +
-        '<div style="font-size:.42rem;color:#C9A84C;letter-spacing:.14em;margin-top:.1rem">haramain.pi \u00B7 Pi Network Testnet</div>' +
+        '<div style="font-size:.42rem;color:#C9A84C;letter-spacing:.14em;margin-top:.1rem">haramain.pi \u00B7 Pi Network Mainnet</div>' +
       '</div>' +
       '<div style="text-align:center;margin-bottom:.65rem;">' +
         '<div style="font-size:.72rem;font-weight:700;color:#F0EAD8;margin-bottom:.15rem">Transaction Receipt</div>' +
@@ -7955,7 +7975,7 @@ function showReceipt(txt) {
           '<span>\uD83D\uDCC5</span><span>' + rd + '</span>' +
           '<span>\uD83D\uDC64</span><span>' + ru + '</span>' +
           '<span>\uD83E\uDEAA</span><span>' + rp + '</span>' +
-          '<span>\u2705</span><span>Completed \u00B7 Testnet</span>' +
+          '<span>\u2705</span><span>Completed \u00B7 Mainnet</span>' +
         '</div>' +
       '</div>' +
       '<div style="text-align:center;font-size:.42rem;color:rgba(201,168,76,.35);margin-bottom:.65rem;">haramain.pi \u00B7 \u00A9 2026 HARAMAIN</div>' +
@@ -8007,7 +8027,7 @@ function shareReceiptNow() {
   var m = document.getElementById('rcpt-modal');
   if (!m||!m._d) return;
   var d = m._d;
-  var t = 'HARAMAIN Receipt\n\nID: '+d.id+'\n'+d.text+'\nDate: '+d.date+'\nUser: '+d.user+'\n\nharamain.pi \u00B7 Pi Network Testnet';
+  var t = 'HARAMAIN Receipt\n\nID: '+d.id+'\n'+d.text+'\nDate: '+d.date+'\nUser: '+d.user+'\n\nharamain.pi \u00B7 Pi Network Mainnet';
   if (navigator.share) navigator.share({ title:'HARAMAIN Receipt', text:t });
   else { if (typeof copyClip==='function') copyClip(t); if (typeof toast==='function') toast('Copied!'); }
 }
@@ -8184,7 +8204,7 @@ function doTr(){
   if(out)out.style.display='block';
   if(res){res.textContent='Translating...';res.style.direction='ltr';}
   if(lbl)lbl.textContent='PLEASE WAIT';
-  fetch('https://api.anthropic.com/v1/messages',{
+  fetch('/ai',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,
       system:'Translator. Translate to '+(lang?lang.n:_trLang5)+'. Return ONLY the translation, nothing else, no quotes.',
@@ -8370,7 +8390,7 @@ document.addEventListener('DOMContentLoaded',function(){
       <button class="modal-close" onclick="closeModal('modal-privacy')">✕</button>
     </div>
     <div class="modal-body">
-      <p><strong style="color:#E8C76A">Effective Date:</strong> 17 May 2026 · Powered by Haramain.pi · Pi Network Testnet</p>
+      <p><strong style="color:#E8C76A">Effective Date:</strong> 17 May 2026 · Powered by Haramain.pi · Pi Network Mainnet</p>
       <h3>1. Information We Collect</h3>
       <p>HARAMAIN collects the following information when you use the platform:</p>
       <ul>
@@ -8419,12 +8439,12 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="modal-body">
       <p><strong style="color:#E8C76A">Effective Date:</strong> 17 May 2026 · HARAMAIN · Powered by Haramain.pi</p>
       <h3>1. Acceptance of Terms</h3>
-      <p>By using HARAMAIN, you agree to these Terms of Service. HARAMAIN is a Web3 pilgrimage platform operating on Pi Network Testnet. It is not affiliated with the Saudi government, Ministry of Hajj, or any official Hajj authority.</p>
+      <p>By using HARAMAIN, you agree to these Terms of Service. HARAMAIN is a Web3 pilgrimage platform operating on Pi Network Mainnet. It is not affiliated with the Saudi government, Ministry of Hajj, or any official Hajj authority.</p>
       <h3>2. Platform Purpose</h3>
       <p>HARAMAIN provides digital tools for Hajj & Umrah pilgrims including prayer guidance, ritual tracking, safety tools, Islamic knowledge, and Pi Network payment services. All religious guidance is provided for informational purposes — consult a qualified Islamic scholar for fatwa (religious rulings).</p>
       <h3>3. Pi Network Payments</h3>
       <ul>
-        <li>All payments are made in Pi (π) on Pi Network Testnet · sandbox:true</li>
+        <li>All payments are made in Pi (π) on Pi Network Mainnet</li>
         <li>Payments are final and processed by Pi Network's blockchain</li>
         <li>Pilgrim Pass (1π) unlocks premium features permanently on your device</li>
         <li>Zakat and Sadaqah payments go to the recipient address set by HARAMAIN</li>
@@ -8442,7 +8462,7 @@ document.addEventListener('DOMContentLoaded',function(){
       <h3>8. Modifications</h3>
       <p>HARAMAIN reserves the right to update these terms. Continued use after updates constitutes acceptance.</p>
       <h3>9. Contact & Support</h3>
-      <p>support@haramain.pi · Powered by Haramain.pi · Pi Network Testnet · 2026</p>
+      <p>support@haramain.pi · Powered by Haramain.pi · Pi Network Mainnet · 2026</p>
     </div>
   </div>
 </div>
@@ -8461,14 +8481,14 @@ document.addEventListener('DOMContentLoaded',function(){
         <div style="font-size:.62rem;color:#5C6B58;margin-top:.2rem">The Web3 Pilgrimage Infrastructure · Version 2.0 · 2026</div>
       </div>
       <h3>Mission</h3>
-      <p>HARAMAIN is the next-generation global pilgrimage operating system — combining AI guidance, real-time safety, smart worship technology, digital identity, and Pi Testnet financial systems into one intelligent Islamic platform.</p>
+      <p>HARAMAIN is the next-generation global pilgrimage operating system — combining AI guidance, real-time safety, smart worship technology, digital identity, and Pi Mainnet financial systems into one intelligent Islamic platform.</p>
       <h3>What Makes HARAMAIN Unique</h3>
       <ul>
         <li>🤖 First AI-powered Hajj assistant on Pi Network</li>
         <li>👤 Global pilgrim serial number system — never repeats</li>
         <li>💊 Digital Health Passport with emergency QR</li>
         <li>📍 Live Tracker with family sharing</li>
-        <li>💸 Full Pi Testnet payment infrastructure</li>
+        <li>💸 Full Pi Mainnet payment infrastructure</li>
         <li>🌍 6 languages — English, Arabic, Hausa, Urdu, Indonesian, Turkish</li>
         <li>🚨 Emergency SOS with GPS and Saudi emergency numbers</li>
       </ul>
@@ -8482,7 +8502,7 @@ document.addEventListener('DOMContentLoaded',function(){
       </ul>
       <h3>Not Affiliated With</h3>
       <p>HARAMAIN is an independent platform on Pi Network. Not affiliated with the Saudi government, Ministry of Hajj & Umrah, or any official Hajj authority.</p>
-      <div style="text-align:center;margin-top:1rem;font-family:'DM Mono','Courier New',monospace;font-size:.55rem;color:#2A3828">Powered by Haramain.pi · Pi Network Testnet · sandbox:true · 2026</div>
+      <div style="text-align:center;margin-top:1rem;font-family:'DM Mono','Courier New',monospace;font-size:.55rem;color:#2A3828">Powered by Haramain.pi · Pi Network Mainnet · 2026</div>
     </div>
   </div>
 </div>
@@ -8509,5 +8529,38 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
 </div>
 
+<script>
+/* Honest payments (Oct 2026): a payment made inside an app goes to the app's own wallet.
+   So Haramain no longer takes Zakat, Sadaqah or Qurbani (it cannot pass them on), and
+   "Send Pi" hands over to Pi Wallet, where the transfer really goes to the other person. */
+function hmSheet(title, html, actionLabel, actionHref){
+  var d=document.createElement('div');
+  d.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center';
+  d.innerHTML='<div style="width:100%;max-width:480px;background:#0E1410;color:#F4EFE2;border-radius:22px 22px 0 0;padding:20px 18px 26px;font-family:inherit;line-height:1.6">'
+    +'<div style="font-size:1.1rem;font-weight:800;margin-bottom:8px">'+title+'</div><div style="font-size:.95rem;color:rgba(244,239,226,.8)">'+html+'</div>'
+    +(actionHref?'<a href="'+actionHref+'" style="display:block;margin-top:14px;text-align:center;padding:14px;border-radius:14px;background:#C9A84C;color:#14110A;font-weight:800;text-decoration:none">'+actionLabel+'</a>':'')
+    +'<button style="display:block;width:100%;margin-top:10px;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:none;color:inherit;font-weight:700">Close</button></div>';
+  d.querySelector('button').onclick=function(){ d.remove(); };
+  d.onclick=function(e){ if(e.target===d) d.remove(); };
+  document.body.appendChild(d);
+}
+function hmVal(id){ var e=document.getElementById(id); return e&&e.value?String(e.value).trim():''; }
+function sendPi(){
+  var to=(hmVal('send-to')||hmVal('send-user')||hmVal('sp-to')).replace(/^@/,''), amt=hmVal('send-amt')||hmVal('send-amount')||hmVal('sp-amt');
+  try{ if(to&&navigator.clipboard) navigator.clipboard.writeText(to); }catch(e){}
+  var who=to?('@'+to.replace(/[<>&"]/g,'')):'the person';
+  hmSheet('Send Pi with Pi Wallet','Sending Pi to another person is done in Pi Wallet, so it reaches them directly.<ol style="margin:10px 0 0;padding-left:18px"><li>Tap Open Pi Wallet</li><li>Choose Send and paste '+who+(to?' (copied)':'')+'</li><li>Enter '+(amt?('π '+Number(amt)):'the amount')+' and confirm</li></ol>','Open Pi Wallet','https://wallet.pinet.com');
+}
+function sendZakat(){
+  hmSheet('Give your Zakat directly','Haramain helps you calculate Zakat, but it does not collect or pass on Zakat. Please give it through a trusted registered charity, your local mosque, or directly to eligible people you know.');
+}
+function sendSadaqah(){
+  hmSheet('Give Sadaqah directly','Haramain does not collect or pass on Sadaqah. Give through a trusted registered charity or your local mosque, or directly to people in need.');
+}
+function orderQurbani(){
+  hmSheet('Arrange your Qurbani','Haramain does not arrange sacrifices. In Saudi Arabia, buy a voucher from the official Adahi project: on the Adahi or Nusuk platforms, or at approved banks such as Al Rajhi. Outside the Kingdom, use a trusted registered charity or your local mosque.','Open Adahi','https://adahi.org');
+}
+</script>
+<script>/* Testnet copy: same code, a clear label so nobody mistakes test Pi for real Pi */(function(){if(!/(^|[.-])testnet[.-]/i.test(location.hostname))return;document.title="[Testnet] "+document.title;var b=document.createElement("div");b.textContent="TESTNET";b.setAttribute("aria-label","Testnet: test Pi only");b.style.cssText="position:fixed;left:12px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:99999;padding:3px 10px;border-radius:999px;background:#B45309;color:#fff;font:800 11px/1.4 system-ui,sans-serif;letter-spacing:.06em;pointer-events:none;opacity:.92";(document.body||document.documentElement).appendChild(b);})();</script>
 </body>
 </html>

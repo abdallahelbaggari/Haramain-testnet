@@ -1,6 +1,28 @@
 {
-  "name": "haramain-testnet",
-  "version": "5.0.0",
-  "description": "HARAMAIN Testnet - Web3 Pilgrimage Platform · Pi Network Testnet",
-  "private": true
+  "name": "haramain",
+  "version": "3.0.0",
+  "description": "HARAMAIN — The Web3 Pilgrimage Platform on Pi Network",
+
+  "private": true,
+
+  "scripts": {
+    "build": "echo \"Static build\"",
+    "start": "echo \"Cloudflare Pages deployment\""
+  },
+
+  "engines": {
+    "node": "18"
+  },
+
+  "keywords": [
+    "pi-network",
+    "hajj",
+    "umrah",
+    "haramain",
+    "mainnet",
+    "web3",
+    "islamic"
+  ],
+
+  "license": "MIT"
 }
