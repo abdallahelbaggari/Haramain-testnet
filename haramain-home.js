@@ -32,7 +32,7 @@
       '<div class="hm-secg"><div class="hm-sec-i">🔔</div><div><b>Payment alerts</b><small>Sound and vibration for every payment</small></div><button type="button" onclick="hmFxSettings()">Open</button></div>' +
       '<div class="hm-tips"><b>Stay safe</b><ul>' +
         '<li>Haramain never asks for your Pi passphrase. Anyone who asks is a scammer.</li>' +
-        '<li>You approve every payment yourself in Pi’s own pop-up. Check the amount and the @username before you approve.</li>' +
+        '<li>Check the amount and the @username before every payment.</li>' +
         '<li>Payments on the Pi blockchain cannot be reversed. Pay only people you trust.</li>' +
         '<li>Every receipt has a transaction ID you can check on the Pi blockchain. An edited receipt will not match.</li>' +
         '<li>Use the Mainnet only with real Pi; the Testnet uses test Pi with no value.</li></ul></div>', 'hm-security');
@@ -56,7 +56,7 @@
       x.textAlign = 'center'; x.fillStyle = '#E6BD5C'; x.font = '800 44px DM Sans, sans-serif'; x.fillText('HARAMAIN', W / 2, 130);
       x.fillStyle = '#fff'; x.font = '800 56px DM Sans, sans-serif'; x.fillText('Pay with Pi', W / 2, 220);
       x.font = '800 46px DM Sans, sans-serif'; x.fillText(name.slice(0, 28), W / 2, 990); x.font = '600 34px DM Sans, sans-serif'; x.fillStyle = 'rgba(255,255,255,.85)'; x.fillText(name === '@' + uname() ? 'Scan to pay' : '@' + uname() + ' · scan to pay', W / 2, 1050);
-      x.font = '500 26px DM Sans, sans-serif'; x.fillText('You approve every payment in Pi’s own pop-up', W / 2, 1130);
+      x.font = '500 26px DM Sans, sans-serif'; x.fillText('Secure payments on Pi Network', W / 2, 1130);
       c.toBlob(function (b) { if (window.HMFiles) HMFiles.save(b, 'Haramain-pay-QR-' + uname() + '.jpg', 'image/jpeg', 'QR code'); }, 'image/jpeg', 0.92);
     };
   };

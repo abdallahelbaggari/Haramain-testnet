@@ -181,7 +181,7 @@
   window.hmSendSheet = function () {
     var payees = get('payees', []), lock = null;
     var w = sheetEl('💸 Send Pi',
-      '<div class="hm-sheet-b">Fill in your transfer here. You approve it in Pi Wallet, and Haramain confirms it on the Pi blockchain and gives you a receipt with your narration.</div>' +
+      '<div class="hm-sheet-b">Enter the transfer details. A receipt is created when the payment is confirmed on the Pi blockchain.</div>' +
       (payees.length ? '<label class="wf-l">Recent</label><div class="wf-payees">' + payees.slice(0, 6).map(function (p, i) { return '<button type="button" data-i="' + i + '">' + esc(p.n || short(p.t)) + '</button>'; }).join('') + '</div>' : '') +
       '<label class="wf-l">To · wallet address or Haramain Pay link</label><input class="fi wf-mono" id="sd-to" autocomplete="off" autocapitalize="characters" placeholder="G… address, or paste a payment link">' +
       '<div class="wf-hint" id="sd-tohint"></div>' +
@@ -189,7 +189,7 @@
       '<label class="wf-l">Amount</label><div class="wf-amt"><input id="sd-a" type="number" inputmode="decimal" min="0" step="any" placeholder="0"><span>π</span></div><div class="wf-conv" id="sd-c"></div>' +
       '<label class="wf-l">Narration</label><input class="fi" id="sd-x" maxlength="80" placeholder="What is it for? e.g. Hotel deposit, gift for Umrah">' +
       '<button type="button" class="hm-sheet-a" id="sd-go">Continue</button>' +
-      '<div class="wf-hint" style="margin-top:8px">🔒 Only you can approve a payment, in Pi Wallet. Haramain never holds your Pi and never asks for your passphrase.</div>');
+      '<div class="wf-hint" style="margin-top:8px">🔒 Haramain never holds your Pi and never asks for your passphrase.</div>');
     var to = $('sd-to'), a = $('sd-a');
     a.oninput = function () { $('sd-c').textContent = convLine(parseFloat(a.value)); };
     to.oninput = function () {
@@ -217,13 +217,13 @@
   function showSend(i) {
     var sd = get('sends', [])[i]; if (!sd) return;
     if (sd.paid) return hmReceiptByTx(sd.paid);
-    var w = sheetEl('💸 Approve in Pi Wallet',
+    var w = sheetEl('💸 Continue in Pi Wallet',
       '<div class="wf-req"><div class="wf-req-a">' + sd.a + ' π</div><div class="wf-req-c">' + esc(convLine(sd.a)) + '</div><div class="wf-req-i">To ' + esc(sd.n || short(sd.t)) + ' · ' + esc(sd.x) + '</div></div>' +
       '<div class="wf-steps">' +
         '<div class="wf-step"><i>1</i><div><b>Copy the recipient’s address</b>' + copyBtn(sd.t) + '</div></div>' +
         '<div class="wf-step"><i>2</i><div><b>Copy the amount</b>' + copyBtn(String(sd.a)) + '</div></div>' +
         '<div class="wf-step"><i>3</i><div><b>Copy the memo</b><small>Put it in the memo so Haramain can find your payment.</small>' + copyBtn(sd.r) + '</div></div>' +
-        '<div class="wf-step"><i>4</i><div><b>Open Pi Wallet, tap Send, paste and approve</b><button type="button" class="hm-sheet-a" style="margin-top:8px" onclick="hmOpenPiWallet()">Open Pi Wallet</button><small>After approving, tap Back to return to Haramain. Your transfer waits here.</small></div></div>' +
+        '<div class="wf-step"><i>4</i><div><b>Open Pi Wallet, tap Send and paste</b><button type="button" class="hm-sheet-a" style="margin-top:8px" onclick="hmOpenPiWallet()">Open Pi Wallet</button><small>Then tap Back to return to Haramain.</small></div></div>' +
       '</div>' +
       '<button type="button" class="wf-cta" id="sd-chk">✅ I have sent it · confirm</button><div class="wf-status" id="sd-st"></div>' +
       '<details class="wf-alt"><summary>Forgot the memo? Use the transaction ID</summary><input class="fi wf-mono" id="sd-tx" placeholder="64-character transaction ID" autocomplete="off" style="margin-top:8px"><button type="button" class="wf-btn" id="sd-txb" style="margin-top:8px;width:100%">Verify this transaction</button></details>');
@@ -277,7 +277,7 @@
     all.forEach(function (sd, i) {
       if (sd.paid || Date.now() - sd.d > 7 * 864e5) return;
       fetch('/verify?to=' + sd.t + '&ref=' + sd.r + '&amt=' + sd.a + '&net=' + (TESTNET ? 'test' : 'main')).then(function (r) { return r.json(); }).then(function (d) {
-        if (d.ok && d.found) { var cur = get('sends', []); var j = cur.findIndex ? cur.findIndex(function (x) { return x.r === sd.r && x.t === sd.t; }) : i; if (j >= 0) { var open = document.querySelector('.hm-sheet-wrap'); if (open && /Approve in Pi Wallet/.test(open.textContent)) open.remove(); finishSend(j, d.tx); } }
+        if (d.ok && d.found) { var cur = get('sends', []); var j = cur.findIndex ? cur.findIndex(function (x) { return x.r === sd.r && x.t === sd.t; }) : i; if (j >= 0) { var open = document.querySelector('.hm-sheet-wrap'); if (open && /Continue in Pi Wallet/.test(open.textContent)) open.remove(); finishSend(j, d.tx); } }
       }).catch(function () {});
     });
   }
@@ -351,7 +351,7 @@
       '<div class="wf-card"><div class="wf-row"><img src="icons/icon-192.png" alt=""><div class="wf-who"><small>Haramain Wallet</small><b>' + esc(fullName()) + '<button type="button" onclick="hmEditName()" aria-label="Edit name">✎</button></b><span>' + (uname() ? '@' + esc(uname()) : 'Guest · sign in with Pi to pay') + '</span></div>' + (prem ? '<span class="wf-badge">⭐ Supporter</span>' : '<span class="wf-badge wf-net-b">' + (TESTNET ? 'Testnet' : 'Mainnet') + '</span>') + '</div>' +
         '<div class="wf-price" id="wf-price" role="button" tabindex="0" onclick="PiPrice.open && PiPrice.open()"></div>' +
         '<div class="wf-net">' + NETN + ' · haramain.pi</div></div>' +
-      '<div class="hm-trust"><span>🔒 Non-custodial</span><span>⛓ Verified on the Pi blockchain</span><span>✔ You approve every payment</span><span>🌍 Works worldwide</span></div>' +
+      '<div class="hm-trust"><span>🔒 Non-custodial</span><span>⛓ Verified on the Pi blockchain</span><span>🛡 Secure payments</span><span>🌍 Works worldwide</span></div>' +
       '<div class="hm-qa"><button type="button" class="tx-only" onclick="hmSendSheet()"><i>↗</i>Send</button><button type="button" onclick="hmGetPaid()"><i class="g">↙</i>Request</button><button type="button" onclick="hmPay()"><i class="n">▦</i>Pay</button><button type="button" onclick="hmBusiness()"><i class="b">▤</i>Business</button></div>';
     heroPrice();
     var openN = sales.filter(function (x) { return !x.paid; }).length, R = rows();
@@ -371,7 +371,7 @@
         (l.code !== 'SAR' ? '<label><span>' + esc(l.code) + '</span><input id="wc-loc" type="number" inputmode="decimal" placeholder="0" oninput="hmConv(\'loc\')"></label>' : '') + '</div></div>' +
       '<div class="wf-sec"><div class="wf-sec-h"><b>🤲 Give &amp; support</b></div><div class="nv-grid wl-tools">' +
         [['🤲', 'Zakat', "oUtil('zakat')"], ['💝', 'Sadaqah', "oUtil('sadaqah')"], ['🐑', 'Qurbani', "oUtil('qurbani')"], ['⭐', 'Support Haramain', 'buyPrem()']].map(function (t) { return '<button type="button" class="nv-t" onclick="' + t[2] + '"><span class="nv-i">' + t[0] + '</span><span class="nv-l">' + t[1] + '</span></button>'; }).join('') + '</div></div>' +
-      '<div class="hm-secure"><b>🔒 Safe payments on the Pi blockchain</b><span>You approve every payment yourself in Pi’s own secure pop-up. Haramain never asks for your passphrase and cannot move Pi from your wallet. Sending to a Haramain user passes through the Haramain app wallet for a few seconds by fixed rules: it is delivered, or refunded to you, and every step is recorded on the Pi blockchain.</span><button type="button" onclick="hmFxSettings()">🔔 Sounds & vibration</button></div>';
+      '<div class="hm-secure"><b>🔒 Secure payments</b><span>Every payment is confirmed by you and recorded on the Pi blockchain. Haramain never asks for your passphrase.</span><button type="button" onclick="hmFxSettings()">🔔 Sounds & vibration</button></div>';
     var w = $('wc-pi'); if (w) { w.value = 1; convert('pi'); }
     drawTx();
   }
