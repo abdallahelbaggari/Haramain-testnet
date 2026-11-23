@@ -1,6 +1,6 @@
 /* Haramain Home — big live Pi card, quick actions, Hadith and Dua of the day, every tool in clear groups with
    search, Wallet in the centre of the bottom bar, "My Pi QR" for merchants, and a Security center
-   (wallet PIN lock, hide amounts, safety tips). Everything runs on the phone. */
+   (hide amounts, payment alerts, safety tips). Everything runs on the phone. */
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
@@ -20,64 +20,14 @@
     document.body.appendChild(w); return w;
   }
 
-  /* ───────── Security: wallet PIN lock, hide amounts ───────── */
-  function sec() { var s = get('sec', null); return s && typeof s === 'object' ? s : { pin: '', salt: '', hide: false, lockMin: 5 }; }
-  function hashPin(pin, salt) {
-    var data = new TextEncoder().encode('haramain|' + salt + '|' + pin);
-    return crypto.subtle.digest('SHA-256', data).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); });
-  }
-  var unlockedAt = 0, fails = 0, blockUntil = 0;
-  function needPin() { var s = sec(); return !!s.pin && Date.now() - unlockedAt > (s.lockMin || 5) * 60000; }
-  function askPin(why) {
-    return new Promise(function (ok) {
-      if (!needPin()) return ok(true);
-      var w = sheet('🔒 Enter your wallet PIN', '<div class="hm-sheet-b">' + esc(why || 'Your wallet is locked.') + '</div>' +
-        '<input class="fi hm-pin" id="pin-in" type="password" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="••••">' +
-        '<div class="hm-pin-msg" id="pin-msg"></div><button type="button" class="hm-sheet-a" id="pin-go">Unlock</button>' +
-        '<button type="button" class="hm-rlink" id="pin-forgot">Forgot PIN?</button>', 'hm-pinlock');
-      var inp = $('pin-in'); setTimeout(function () { inp.focus(); }, 80);
-      var done = false, close = function (v) { if (done) return; done = true; w.remove(); ok(v); };
-      w.addEventListener('click', function (e) { if (e.target === w || e.target.classList.contains('hm-sheet-x')) close(false); });
-      var go = function () {
-        if (Date.now() < blockUntil) { $('pin-msg').textContent = 'Too many tries. Wait ' + Math.ceil((blockUntil - Date.now()) / 1000) + ' seconds.'; return; }
-        var s = sec(); hashPin(inp.value, s.salt).then(function (h) {
-          if (h === s.pin) { fails = 0; unlockedAt = Date.now(); close(true); }
-          else { fails++; inp.value = ''; if (fails >= 5) { blockUntil = Date.now() + 60000; fails = 0; } $('pin-msg').textContent = 'Wrong PIN. Try again.'; try { navigator.vibrate && navigator.vibrate(120); } catch (e) {} }
-        });
-      };
-      $('pin-go').onclick = go; inp.onkeydown = function (e) { if (e.key === 'Enter') go(); };
-      $('pin-forgot').onclick = function () {
-        if (!uname() || !window.HM_TOKEN) { say('Sign in with Pi first, then reset your PIN'); return; }
-        if (!confirm('Remove the wallet PIN? You are signed in as @' + uname() + '. You can set a new PIN afterwards.')) return;
-        var s = sec(); s.pin = ''; s.salt = ''; put('sec', s); unlockedAt = Date.now(); say('PIN removed'); close(true);
-      };
-    });
-  }
-  window.hmAskPin = askPin;
-  window.hmSetPin = function () {
-    var w = sheet('🔒 Wallet PIN', '<div class="hm-sheet-b">Choose a 4 to 6 digit PIN. Haramain asks for it to open the wallet, send Pi or create invoices on this phone. It is stored only as a secure code on this phone.</div>' +
-      '<input class="fi hm-pin" id="np1" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="New PIN">' +
-      '<input class="fi hm-pin" id="np2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="Repeat PIN">' +
-      '<button type="button" class="hm-sheet-a" id="np-go">Save PIN</button>', 'hm-setpin');
-    $('np-go').onclick = function () {
-      var a = $('np1').value, b = $('np2').value;
-      if (!/^\d{4,6}$/.test(a)) return say('Use 4 to 6 digits');
-      if (/^(\d)\1+$/.test(a) || '0123456789'.indexOf(a) >= 0 || '9876543210'.indexOf(a) >= 0) return say('That PIN is too easy to guess. Choose another.');
-      if (a !== b) return say('The two PINs do not match');
-      var salt = Array.prototype.map.call(crypto.getRandomValues(new Uint8Array(12)), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
-      hashPin(a, salt).then(function (h) { var s = sec(); s.pin = h; s.salt = salt; put('sec', s); unlockedAt = Date.now(); w.remove(); say('✅ Wallet PIN is on'); hmSecurity(); });
-    };
-  };
+  /* ───────── Security: hide amounts, safety tips ───────── */
+  function sec() { var s = get('sec', null); return s && typeof s === 'object' ? s : { hide: false }; }
   window.hmSecSet = function (k, v) { var s = sec(); s[k] = v; put('sec', s); applyHide(); };
   function applyHide() { document.documentElement.classList.toggle('hm-hide-amt', !!sec().hide); }
   window.hmToggleHide = function () { hmSecSet('hide', !sec().hide); say(sec().hide ? 'Amounts hidden' : 'Amounts shown'); };
   window.hmSecurity = function () {
     var s = sec();
     var w = sheet('🛡️ Security center',
-      '<div class="hm-secg"><div class="hm-sec-i">' + (s.pin ? '✅' : '⚠️') + '</div><div><b>Wallet PIN</b><small>' + (s.pin ? 'On · asked after ' + (s.lockMin || 5) + ' minutes away' : 'Off · anyone holding your phone can open the wallet') + '</small></div>' +
-        (s.pin ? '<button type="button" onclick="hmSetPin()">Change</button>' : '<button type="button" class="on" onclick="hmSetPin()">Turn on</button>') + '</div>' +
-      (s.pin ? '<div class="hm-secg"><div class="hm-sec-i">⏱</div><div><b>Lock after</b><small>Ask for the PIN again after this time</small></div><select class="fi" style="width:auto;margin:0" onchange="hmSecSet(\'lockMin\',+this.value)">' + [1, 5, 15, 60].map(function (m) { return '<option value="' + m + '"' + ((s.lockMin || 5) === m ? ' selected' : '') + '>' + m + ' min</option>'; }).join('') + '</select></div>' +
-        '<div class="hm-secg"><div class="hm-sec-i">🗑</div><div><b>Remove PIN</b><small>Needs your current PIN</small></div><button type="button" onclick="hmPinOff()">Remove</button></div>' : '') +
       '<div class="hm-secg"><div class="hm-sec-i">🙈</div><div><b>Hide amounts</b><small>Hide prices and amounts on screen in public places</small></div><label class="hm-tg"><input type="checkbox" ' + (s.hide ? 'checked' : '') + ' onchange="hmSecSet(\'hide\',this.checked)"><span></span></label></div>' +
       '<div class="hm-secg"><div class="hm-sec-i">🔔</div><div><b>Payment alerts</b><small>Sound and vibration for every payment</small></div><button type="button" onclick="hmFxSettings()">Open</button></div>' +
       '<div class="hm-tips"><b>Stay safe</b><ul>' +
@@ -88,23 +38,6 @@
         '<li>Use the Mainnet only with real Pi; the Testnet uses test Pi with no value.</li></ul></div>', 'hm-security');
     return w;
   };
-  window.hmPinOff = function () { unlockedAt = 0; askPin('Enter your current PIN to remove it.').then(function (ok) { if (!ok) return; var s = sec(); s.pin = ''; s.salt = ''; put('sec', s); say('PIN removed'); hmSecurity(); }); };
-  function guard() {
-    // wallet, send, invoices: ask for the PIN first when it is on
-    var _goS = window.goS;
-    window.goS = function (id) {
-      var a = arguments, self = this;
-      if (id === 'payments' && needPin()) { askPin('Enter your PIN to open the wallet.').then(function (ok) { if (ok) _goS.apply(self, a); }); return; }
-      return _goS.apply(this, arguments);
-    };
-    ['hmSendSheet', 'hmInvoice', 'hmGetPaid'].forEach(function (f) {
-      var o = window[f]; if (typeof o !== 'function' || o._pin) return;
-      window[f] = function () { var a = arguments, self = this; if (!needPin()) return o.apply(self, a); askPin('Enter your PIN to continue.').then(function (ok) { if (ok) o.apply(self, a); }); };
-      window[f]._pin = true;
-    });
-    document.addEventListener('visibilitychange', function () { if (document.hidden) { var s = sec(); if (s.pin) unlockedAt = Math.min(unlockedAt, Date.now() - ((s.lockMin || 5) * 60000) + 30000); } });
-  }
-
   /* ───────── My Pi QR: customers scan to pay you inside Haramain ───────── */
   function enc(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
   window.hmMyQr = function () {
@@ -198,9 +131,9 @@
   }
 
   function start() {
+    try { var s0 = sec(); if (s0.pin || s0.salt) { delete s0.pin; delete s0.salt; delete s0.lockMin; put('sec', s0); } } catch (e) {}   // the wallet PIN was removed
     try { nav(); } catch (e) {}
     try { organise(); } catch (e) {}
-    try { guard(); } catch (e) {}
     applyHide();
     window.addEventListener('pi-price', refreshPi);
     setInterval(function () { if (!document.hidden) refreshPi(); }, 30000);
