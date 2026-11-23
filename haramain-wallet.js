@@ -351,7 +351,7 @@
       '<div class="wf-card"><div class="wf-row"><img src="icons/icon-192.png" alt=""><div class="wf-who"><small>Haramain Wallet</small><b>' + esc(fullName()) + '<button type="button" onclick="hmEditName()" aria-label="Edit name">✎</button></b><span>' + (uname() ? '@' + esc(uname()) : 'Guest · sign in with Pi to pay') + '</span></div>' + (prem ? '<span class="wf-badge">⭐ Supporter</span>' : '<span class="wf-badge wf-net-b">' + (TESTNET ? 'Testnet' : 'Mainnet') + '</span>') + '</div>' +
         '<div class="wf-price" id="wf-price" role="button" tabindex="0" onclick="PiPrice.open && PiPrice.open()"></div>' +
         '<div class="wf-net">' + NETN + ' · haramain.pi</div></div>' +
-      '<div class="hm-trust"><span>🔒 Non-custodial</span><span>⛓ Verified on the Pi blockchain</span><span>✔ You approve every payment</span></div>' +
+      '<div class="hm-trust"><span>🔒 Non-custodial</span><span>⛓ Verified on the Pi blockchain</span><span>✔ You approve every payment</span><span>🌍 Works worldwide</span></div>' +
       '<div class="hm-qa"><button type="button" class="tx-only" onclick="hmSendSheet()"><i>↗</i>Send</button><button type="button" onclick="hmGetPaid()"><i class="g">↙</i>Request</button><button type="button" onclick="hmPay()"><i class="n">▦</i>Pay</button><button type="button" onclick="hmBusiness()"><i class="b">▤</i>Business</button></div>';
     heroPrice();
     var openN = sales.filter(function (x) { return !x.paid; }).length, R = rows();

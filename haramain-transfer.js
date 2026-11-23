@@ -160,7 +160,7 @@
   };
   /* opened from a request link: fill the Send sheet once signed in */
   var pendingReq = null;
-  (function () { var m = /#send=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m) return; var o = dec(m[1]); if (o && /^[A-Za-z0-9_.-]{2,40}$/.test(String(o.u || '')) && typeof o.a === 'number' && o.a > 0 && o.a <= 1e6) pendingReq = { u: o.u, a: o.a, x: String(o.x || '').slice(0, 80) }; try { history.replaceState(null, '', location.pathname); } catch (e) {} })();
+  (function () { var m = /#send=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m) return; var o = dec(m[1]); if (o && /^[A-Za-z0-9_.-]{2,40}$/.test(String(o.u || '')) && typeof o.a === 'number' && o.a >= 0 && o.a <= 1e6) pendingReq = { u: o.u, a: o.a, x: String(o.x || '').slice(0, 80) }; try { history.replaceState(null, '', location.pathname); } catch (e) {} })();
   function openPending() {
     if (!pendingReq || !CFG.enabled || !me() || !window.HM_TOKEN) return;
     var r = pendingReq; pendingReq = null;

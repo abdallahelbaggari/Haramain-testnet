@@ -364,7 +364,7 @@
 
   /* ───────── An-Nawawi's 40 Hadith ───────── */
   var HD = null, HS = get('hfs', 20);
-  function loadH() { if (HD) return Promise.resolve(HD); return fetch('/haramain-hadith.json').then(function (r) { return r.json(); }).then(function (d) { HD = d.hadith; return HD; }); }
+  function loadH() { if (HD) return Promise.resolve(HD); return fetch('/haramain-hadith.json?v=1').then(function (r) { return r.json(); }).then(function (d) { HD = d.hadith; return HD; }); }
   function ensureH() {
     if ($('s-hadith')) return; var sec = document.createElement('section'); sec.className = 'scr'; sec.id = 's-hadith';
     sec.innerHTML = '<div id="hh-home"></div>'; ($('main') || document.body).appendChild(sec);

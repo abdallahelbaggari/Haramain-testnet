@@ -92,3 +92,69 @@ html:not(.hm-tx-on) .hm-qa{grid-template-columns:repeat(3,1fr)}
 .nv-l{font-weight:800!important;color:#13261E!important}
 .wf-sec{border-width:1.5px!important}
 .hm-qa.hm-qa-s{grid-template-columns:repeat(4,1fr)!important}
+
+/* ── Home: big Pi card, quick actions, Hadith and Dua of the day, tools with search ── */
+#hh-top{margin:2px 0 6px}
+.hh-pi{position:relative;overflow:hidden;margin:4px 0 6px;padding:20px 18px 16px;border-radius:24px;color:#fff;cursor:pointer;
+  background:radial-gradient(120% 100% at 100% 0%,rgba(240,193,75,.32),rgba(240,193,75,0) 55%),linear-gradient(150deg,#12935F 0%,#0A6B45 50%,#063B27 100%);box-shadow:0 20px 36px -20px rgba(6,59,39,.9)}
+.hh-pi::after{content:"π";position:absolute;right:-10px;bottom:-60px;font-size:220px;font-weight:800;color:rgba(255,255,255,.06);line-height:1}
+.hh-pi-t{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;opacity:.95}
+.hh-pi-t span{display:flex;align-items:center;gap:7px}.hh-pi-net{background:rgba(255,255,255,.15);padding:4px 10px;border-radius:999px}
+.hh-live{width:9px;height:9px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 4px rgba(74,222,128,.25)}.hh-live.off{background:#F0C14B;box-shadow:none}
+.hh-pi-v{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 10px;margin:14px 0 4px}
+.hh-pi-v small{font-size:18px;font-weight:700;opacity:.85}.hh-pi-v b{font-size:46px;font-weight:800;letter-spacing:-.02em;line-height:1.05;font-family:'DM Sans',system-ui,sans-serif}
+.hh-pi-v em{font-style:normal;font-size:14px;font-weight:800;padding:4px 10px;border-radius:999px;background:rgba(74,222,128,.2);color:#BBF7D0}.hh-pi-v em.dn{background:rgba(248,113,113,.22);color:#FECACA}
+.hh-pi-s{font-size:13.5px;opacity:.88;margin-bottom:14px}
+.hh-pi-a{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.hh-pi-a button{flex:1;min-width:0;border:0;border-radius:14px;padding:11px 8px;font:inherit;font-size:13.5px;font-weight:800;background:rgba(255,255,255,.16);color:#fff;cursor:pointer}
+.hh-pi-a button:first-child{background:#F0C14B;color:#13261E}
+.hh-sec{display:flex;justify-content:space-between;align-items:baseline;margin:18px 2px 10px}
+.hh-sec h3{margin:0;font-size:18px;font-weight:800;color:#13261E;padding-left:12px;position:relative}
+.hh-sec h3::before{content:"";position:absolute;left:0;top:50%;width:5px;height:1.05em;transform:translateY(-50%);border-radius:3px;background:linear-gradient(180deg,#0E7A52,#C99A37)}
+.hh-sec span{font-size:12.5px;font-weight:700;color:#4B5A52}
+.hh-qa{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 8px}
+.hh-qa button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:6px;font:inherit;font-size:12.5px;font-weight:800;color:#13261E;cursor:pointer;padding:0}
+.hh-qa i{width:58px;height:58px;border-radius:19px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:26px;box-shadow:0 10px 20px -12px rgba(19,38,30,.55)}
+.hh-qa .c-w i{background:linear-gradient(135deg,#F0C14B,#C99A37)}.hh-qa .c-g i{background:linear-gradient(135deg,#C9EEDB,#8FD3B0)}.hh-qa .c-o i{background:linear-gradient(135deg,#FBE7C1,#F0C982)}.hh-qa .c-r i{background:linear-gradient(135deg,#FDD5CF,#F59E8E)}
+.hh-days{display:grid;gap:10px;margin-top:16px}
+.hh-day{padding:16px;border-radius:20px;background:linear-gradient(150deg,#FFF8E8,#FFFFFF);border:1.5px solid #EFD9A4;box-shadow:0 8px 18px -14px rgba(148,112,31,.6)}
+.hh-dua{background:linear-gradient(150deg,#EAF7F0,#FFFFFF);border-color:#BFE3CF;box-shadow:0 8px 18px -14px rgba(10,107,69,.55)}
+.hh-day-k{font-size:12.5px;font-weight:800;letter-spacing:.04em;color:#94701F;text-transform:uppercase;margin-bottom:8px}.hh-dua .hh-day-k{color:#0A6B45}
+.hh-day-ar{font-family:'Amiri Quran','Amiri',serif;font-size:23px;line-height:1.9;color:#13261E;text-align:right;margin-bottom:6px}
+.hh-day-en{font-size:15px;line-height:1.6;color:#2E3B34}
+.hh-day-f{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12.5px;color:#4B5A52;font-weight:700}
+.hh-day-f button{border:0;background:none;color:#0A6B45;font:inherit;font-size:14px;font-weight:800;cursor:pointer;padding:4px 0}
+.hh-q{width:100%;height:50px;border-radius:16px!important;border:1.5px solid #CFE3D8!important;font-size:15px!important;margin:0 0 10px!important}
+.hh-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -2px 12px;padding:2px}
+.hh-chips::-webkit-scrollbar{display:none}
+.hh-chips button{flex:none;border:1.5px solid #E2DDCF;background:#fff;color:#13261E;border-radius:999px;padding:9px 14px;font:inherit;font-size:13.5px;font-weight:800;cursor:pointer}
+.hh-chips button.on{background:linear-gradient(135deg,#0E7A52,#07462F);border-color:#0A6B45;color:#fff}
+#hh-top #nv-home .nv-h{display:none}#hh-top #nv-home.hh-searching .nv-h{display:block}
+
+/* ── bottom bar: Wallet in the centre ── */
+#bnav .bni-c{position:relative}
+#bnav .bni-c .bni-i{width:60px;height:60px;margin-top:-30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:27px;
+  background:linear-gradient(145deg,#12935F,#07462F);box-shadow:0 0 0 4px #fff,0 0 0 6px #E6BD5C,0 12px 22px -8px rgba(7,70,47,.8)}
+#bnav .bni-c .bni-l{color:#0A6B45!important;font-weight:800}
+
+/* ── wallet tools, security, QR, hide amounts ── */
+.hm-wtools{display:flex;gap:8px;margin:4px 0 2px;overflow-x:auto;scrollbar-width:none}
+.hm-wtools button{flex:1;white-space:nowrap;border:1.5px solid #CFE3D8;background:#fff;color:#0A6B45;border-radius:12px;padding:9px 10px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.hm-secg{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #EEF1EE}
+.hm-secg>div:nth-child(2){flex:1;min-width:0}.hm-secg b{display:block;font-size:15px}.hm-secg small{display:block;font-size:12.5px;color:#4B5A52}
+.hm-sec-i{width:40px;height:40px;flex:none;border-radius:12px;background:#E7F6EE;display:flex;align-items:center;justify-content:center;font-size:19px}
+.hm-secg button{border:1.5px solid #CFE3D8;background:#fff;color:#0A6B45;border-radius:10px;padding:8px 12px;font:inherit;font-weight:800;cursor:pointer}.hm-secg button.on{background:#0A6B45;color:#fff;border-color:#0A6B45}
+.hm-tg{position:relative;width:48px;height:28px;flex:none}.hm-tg input{opacity:0;width:0;height:0}.hm-tg span{position:absolute;inset:0;border-radius:999px;background:#D5DDD8;transition:.2s}
+.hm-tg span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}.hm-tg input:checked+span{background:#0A6B45}.hm-tg input:checked+span::after{left:23px}
+.hm-tips{margin-top:14px;padding:14px;border-radius:14px;background:#FFF8E8;border:1px solid #EFD9A4;font-size:13.5px;line-height:1.5}.hm-tips ul{margin:6px 0 0;padding-left:18px}.hm-tips li{margin-bottom:5px}
+.hm-pin{font-size:24px!important;letter-spacing:.5em;text-align:center;margin-top:12px!important}
+.hm-pin-msg{min-height:18px;text-align:center;color:#D33A2C;font-size:13px;font-weight:700}
+.hm-qr{display:flex;flex-direction:column;align-items:center;gap:4px;margin:14px 0;padding:18px;border-radius:20px;background:linear-gradient(150deg,#0E7A52,#07462F);color:#fff;text-align:center}
+.hm-qr canvas{background:#fff;padding:10px;border-radius:16px;margin-bottom:10px;max-width:100%}.hm-qr b{font-size:18px}.hm-qr span{font-size:13px;opacity:.85}
+html.hm-hide-amt .hm-amt,html.hm-hide-amt #wf-price .wf-p-v,html.hm-hide-amt #wf-price .wf-p-s,html.hm-hide-amt .hm-stats b,html.hm-hide-amt .hm-lia b,html.hm-hide-amt .hm-sa b,html.hm-hide-amt .hm-bz>b,html.hm-hide-amt .hm-k b{filter:blur(7px);user-select:none}
+
+/* ── richer colour across the app ── */
+.card.card-green{background:linear-gradient(150deg,#12935F,#0A6B45 55%,#063B27)!important;box-shadow:0 16px 30px -18px rgba(6,59,39,.85)!important}
+.card.card-gold{background:linear-gradient(150deg,#FFF6DF,#FFFFFF)!important;border:1.5px solid #EFD9A4!important}
+.sec-label{font-size:13px!important;letter-spacing:.06em}
+.ic{border:1.5px solid #E6E1D3!important;box-shadow:0 6px 14px -12px rgba(19,38,30,.35)}
