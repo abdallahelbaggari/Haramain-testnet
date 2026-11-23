@@ -287,7 +287,7 @@
     var L = (window.PiPrice && PiPrice.currencies) ? PiPrice.currencies() : [], cur = loc().code;
     var w = sheetEl('💱 Your currency',
       '<input class="fi" id="cu-q" type="search" placeholder="Search: naira, dollar, PKR…" autocomplete="off">' +
-      '<div class="wf-cur" id="cu-l"></div><div class="wf-hint">Rates: OKX / CoinGecko for Pi, open.er-api.com for currencies. For information only.</div>');
+      '<div class="wf-cur" id="cu-l"></div>');
     var draw = function () {
       var q = ($('cu-q').value || '').trim().toLowerCase();
       $('cu-l').innerHTML = L.filter(function (c) { return !q || c.code.toLowerCase().indexOf(q) >= 0 || c.name.toLowerCase().indexOf(q) >= 0; }).map(function (c) {

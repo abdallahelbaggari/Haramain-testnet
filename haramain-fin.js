@@ -205,7 +205,7 @@
     var o = fxPrefs(), sw = function (k, t, s) { return '<label class="hm-sw"><span><b>' + t + '</b><small>' + s + '</small></span><input type="checkbox" ' + (o[k] ? 'checked' : '') + ' onchange="hmFxSet(\'' + k + '\',this.checked)"></label>'; };
     sheet('🔔 Sounds & vibration', '<div class="wf-sec" style="margin-top:6px">' + sw('s', 'Payment sounds', 'A short chime when Pi arrives, is sent or a payment completes') + sw('v', 'Vibration', 'The phone vibrates with each payment alert') + '</div>' +
       '<div class="wf-l">Try them</div><div class="hm-try">' + [['in', '💰', 'Pi received'], ['out', '↗', 'Pi sent'], ['ok', '✓', 'Payment complete'], ['err', '↩', 'Refund / problem']].map(function (x) { return '<button type="button" onclick="hmFx(\'' + x[0] + '\')"><i>' + x[1] + '</i>' + x[2] + '</button>'; }).join('') + '</div>' +
-      '<div class="wf-hint" style="margin-top:10px">Sound plays when your phone is not on silent. Vibration needs a phone that supports it.</div>', 'hm-fx');
+      '', 'hm-fx');
   };
   function hookSounds() {
     if (typeof window.addNotif === 'function' && !window.addNotif._fx) {
@@ -345,8 +345,7 @@
       '<button type="button" class="hm-sheet-a" onclick="hmInvoice()">＋ New invoice</button>' +
       (topL.length ? '<div class="wf-sec-h" style="margin-top:16px"><b>⭐ Top sellers this month</b></div>' + topL.map(function (k) { return '<div class="hm-kv"><span>' + esc(k) + '</span><b>' + fmt(P(top[k]), 4) + ' π</b></div>'; }).join('') : '') +
       '<div class="wf-sec-h" style="margin-top:16px"><b>📁 Reports</b></div>' +
-      '<div class="wf-two"><button type="button" class="wf-cta" onclick="hmSalesCsv()">⬇ Sales (CSV)</button><button type="button" class="wf-cta wf-cta2" onclick="hmInvCsv()">🧾 Invoices (CSV)</button></div>' +
-      '<div class="wf-hint" style="margin-top:12px;text-align:center">Sales figures come from payments verified on the Pi blockchain and saved in your wallet history.</div>', 'hm-biz');
+      '<div class="wf-two"><button type="button" class="wf-cta" onclick="hmSalesCsv()">⬇ Sales (CSV)</button><button type="button" class="wf-cta wf-cta2" onclick="hmInvCsv()">🧾 Invoices (CSV)</button></div>', 'hm-biz');
   };
   window.closeHm = function () { var b = $('hm-biz'); if (b) b.remove(); };
   window.hmSalesCsv = function () {
