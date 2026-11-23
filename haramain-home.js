@@ -43,19 +43,19 @@
   window.hmMyQr = function () {
     if (!uname()) { say('Sign in with Pi to get your payment QR'); try { piLogin(); } catch (e) {} return; }
     var name = get('bizName', '') || get('fullname', '') || '@' + uname(), url = location.origin + '/#send=' + enc({ u: uname(), a: 0, x: 'Payment to ' + name.slice(0, 50) });
-    var w = sheet('▦ My Pi QR', '<div class="hm-sheet-b">Customers scan this with their phone camera or open the link. Haramain opens with your @username filled in; they enter the amount and approve in Pi’s pop-up.</div>' +
-      '<div class="hm-qr"><canvas id="myqr"></canvas><b>' + esc(name) + '</b><span>@' + esc(uname()) + ' · Pay with Pi in Haramain</span></div>' +
+    var w = sheet('▦ My Pi QR', '<div class="hm-qr"><div class="hm-qr-k">HARAMAIN · PAY WITH PI</div><canvas id="myqr"></canvas><b>' + esc(name) + '</b><span>' + (name === '@' + uname() ? 'Scan to pay' : '@' + esc(uname()) + ' · Scan to pay') + '</span></div>' +
       '<div class="wf-two"><button type="button" class="wf-cta" id="qr-save">⬇️ Save QR</button><button type="button" class="wf-cta wf-cta2" id="qr-share">📤 Share link</button></div>', 'hm-myqr');
     var cv = $('myqr');
-    if (window.QRCode && QRCode.toCanvas) QRCode.toCanvas(cv, url, { width: 240, margin: 1, color: { dark: '#07462F', light: '#FFFFFF' } }, function () {});
+    try { HMQR.toCanvas(cv, url, { width: 260, margin: 1, color: { dark: '#07462F', light: '#FFFFFF' } }); } catch (e) {}
     $('qr-share').onclick = function () { var t = 'Pay ' + name + ' with Pi in Haramain:'; if (navigator.share) navigator.share({ title: 'Pay with Pi', text: t, url: url }).catch(function () {}); else { try { navigator.clipboard.writeText(t + ' ' + url); say('Link copied'); } catch (e) {} } };
     $('qr-save').onclick = function () {
       var c = document.createElement('canvas'), W = 900, H = 1200, x = c.getContext('2d'); c.width = W; c.height = H;
       var g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#0E7A52'); g.addColorStop(1, '#07462F'); x.fillStyle = g; x.fillRect(0, 0, W, H);
-      x.fillStyle = '#fff'; x.fillRect(150, 300, 600, 600); x.drawImage(cv, 175, 325, 550, 550);
+      var big = document.createElement('canvas'); try { HMQR.toCanvas(big, url, { width: 560, margin: 2, color: { dark: '#07462F', light: '#FFFFFF' } }); } catch (e) {}
+      x.fillStyle = '#fff'; x.fillRect(150, 300, 600, 600); x.imageSmoothingEnabled = false; x.drawImage(big, 170, 320, 560, 560);
       x.textAlign = 'center'; x.fillStyle = '#E6BD5C'; x.font = '800 44px DM Sans, sans-serif'; x.fillText('HARAMAIN', W / 2, 130);
       x.fillStyle = '#fff'; x.font = '800 56px DM Sans, sans-serif'; x.fillText('Pay with Pi', W / 2, 220);
-      x.font = '800 46px DM Sans, sans-serif'; x.fillText(name.slice(0, 28), W / 2, 990); x.font = '600 34px DM Sans, sans-serif'; x.fillStyle = 'rgba(255,255,255,.85)'; x.fillText('@' + uname() + ' · scan to pay', W / 2, 1050);
+      x.font = '800 46px DM Sans, sans-serif'; x.fillText(name.slice(0, 28), W / 2, 990); x.font = '600 34px DM Sans, sans-serif'; x.fillStyle = 'rgba(255,255,255,.85)'; x.fillText(name === '@' + uname() ? 'Scan to pay' : '@' + uname() + ' · scan to pay', W / 2, 1050);
       x.font = '500 26px DM Sans, sans-serif'; x.fillText('You approve every payment in Pi’s own pop-up', W / 2, 1130);
       c.toBlob(function (b) { if (window.HMFiles) HMFiles.save(b, 'Haramain-pay-QR-' + uname() + '.jpg', 'image/jpeg', 'QR code'); }, 'image/jpeg', 0.92);
     };
@@ -130,6 +130,14 @@
     var hu = $('hdr-user'); if (hu) { hu.style.cursor = 'pointer'; hu.title = 'Profile'; hu.onclick = function () { goS('profile'); }; }
   }
 
+  /* tap ripple on the main buttons */
+  document.addEventListener('pointerdown', function (e) {
+    var b = e.target.closest && e.target.closest('.hm-qa i, .hh-qa i, .wf-cta, .hm-sheet-a, .hh-pi-a button, #bnav .bni-c .bni-i'); if (!b) return;
+    if (getComputedStyle(b).position === 'static') b.style.position = 'relative'; b.style.overflow = 'hidden';
+    var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), s = document.createElement('span'); s.className = 'hm-rip';
+    s.style.width = s.style.height = d + 'px'; s.style.left = (e.clientX - r.left - d / 2) + 'px'; s.style.top = (e.clientY - r.top - d / 2) + 'px';
+    b.appendChild(s); setTimeout(function () { s.remove(); }, 600);
+  }, true);
   function start() {
     try { var s0 = sec(); if (s0.pin || s0.salt) { delete s0.pin; delete s0.salt; delete s0.lockMin; put('sec', s0); } } catch (e) {}   // the wallet PIN was removed
     try { nav(); } catch (e) {}

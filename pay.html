@@ -62,6 +62,7 @@ h2{font-size:15px;margin:22px 4px 10px}
   <div id="app"><div class="bad">Loading payment request…</div></div>
   <div class="foot">Haramain never holds your Pi · <a href="/privacy-policy">Privacy</a> · <a href="/terms-of-service">Terms</a> · <a href="/">Open Haramain</a></div>
 </div>
+<script src="haramain-qr.js?v=1"></script>
 <script src="haramain-receipt.js?v=3"></script>
 <script>
 (function () {
@@ -130,9 +131,7 @@ h2{font-size:15px;margin:22px 4px 10px}
   function copy(v, b) { var done = function () { var o = b.textContent; b.textContent = '✓ Copied'; setTimeout(function () { b.textContent = o; }, 1400); }; try { navigator.clipboard.writeText(v).then(done, function () { fallback(v); done(); }); } catch (e) { fallback(v); done(); } }
   function fallback(v) { var t = document.createElement('textarea'); t.value = v; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (e) {} t.remove(); }
   function qr() {
-    var s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-    s.onload = function () { try { new QRCode($('qr'), { text: inv.t, width: 168, height: 168, colorDark: '#07462F', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M }); } catch (e) {} };
-    document.head.appendChild(s);
+    try { var c = document.createElement('canvas'); $('qr').appendChild(c); HMQR.toCanvas(c, inv.t, { width: 168, margin: 1, color: { dark: '#07462F', light: '#ffffff' } }); } catch (e) {}
   }
   var timer = null, tries = 0;
   function status(cls, html) { var e = $('st'); if (!e) return; e.className = 'status ' + cls; e.innerHTML = html; }
