@@ -191,3 +191,9 @@ html.hm-hide-amt .hm-amt,html.hm-hide-amt #wf-price .wf-p-v,html.hm-hide-amt #wf
 .hm-rip{position:absolute;border-radius:50%;transform:scale(0);background:rgba(255,255,255,.45);animation:hmRipple .55s ease-out forwards;pointer-events:none}
 @keyframes hmRipple{to{transform:scale(2.6);opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* Arabic / Urdu: the English Home, Wallet, Business and receipt parts keep left-to-right reading (Arabic text stays right-to-left) */
+[dir=rtl] #hh-top,[dir=rtl] #wl-top,[dir=rtl] #wl-rest,[dir=rtl] .hm-sheet,[dir=rtl] #s-hadith,[dir=rtl] .scr-hdr{direction:ltr;text-align:left}
+[dir=rtl] .hh-day-ar,[dir=rtl] .hq-ay-ar,[dir=rtl] .hq-head-ar{direction:rtl;text-align:right}
+[dir=rtl] .hdr-user{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] #greeting-bar-text{unicode-bidi:plaintext}

@@ -1091,7 +1091,7 @@ select.fi{cursor:pointer;}
 <link rel="stylesheet" href="haramain-onboarding.css?v=3">
 <link rel="stylesheet" href="haramain-polish.css?v=5">
 <link rel="stylesheet" href="haramain-landing.css?v=2">
-<link rel="stylesheet" href="haramain-fin.css?v=4">
+<link rel="stylesheet" href="haramain-fin.css?v=6">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -3333,7 +3333,7 @@ function renderPilgrimId(){
   if(canvas&&typeof QRCode!=='undefined'){QRCode.toCanvas(canvas,qrData,{width:155,margin:1,color:{dark:'#FFFFFF',light:'#FFFFFF'}},function(){});}
 }
 function sharePilgrimId(){
-  var text='🕋 I am Pilgrim #'+mySerial+' on HARAMAIN — Pi Network\nID: '+myPilgrimId+'\nLevel: '+getLevel().i+' '+getLevel().n+'\nJoin: https://haramain.haramain.pages.dev';
+  var text='🕋 I am Pilgrim #'+mySerial+' on HARAMAIN — Pi Network\nID: '+myPilgrimId+'\nLevel: '+getLevel().i+' '+getLevel().n+'\nJoin: '+location.origin;
   if(navigator.share){navigator.share({title:'HARAMAIN Pilgrim ID',text:text}).catch(function(){copyClip(text);});}
   else copyClip(text);
 }
@@ -5386,13 +5386,11 @@ function fetchPiValue() {
     el.title = 'Live Pi price';
   }
   // Try to get from community source
-  fetch('https://api.coinpaprika.com/v1/tickers/pi-pi-network')
+  // same live price as the rest of the app
+  fetch('/pi-price')
     .then(function(r){ return r.json(); })
     .then(function(d){
-      if (d && d.quotes && d.quotes.USD) {
-        var price = d.quotes.USD.price;
-        if (el) el.textContent = '$' + price.toFixed(4);
-      }
+      if (d && d.ok && d.usd) { if (el) el.textContent = '$' + Number(d.usd).toFixed(4); }
     }).catch(function(){});
 }
 
@@ -5910,17 +5908,8 @@ var JAMARAT_TIMES = [
 
 function initCrowdIntel() {
   renderJamaratTiming();
-  // Simulate live updates
-  setInterval(updateCrowdData, 30000);
 }
-
-function updateCrowdData() {
-  // Simulate crowd fluctuations
-  Object.keys(crowdData).forEach(function(z) {
-    var change = (Math.random() - 0.5) * 5;
-    crowdData[z].pct = Math.min(100, Math.max(10, crowdData[z].pct + change));
-  });
-}
+function updateCrowdData() { /* no simulated crowd numbers: only the published timing guide is shown */ }
 
 function renderJamaratTiming() {
   var el = document.getElementById('jamarat-timing-list');
