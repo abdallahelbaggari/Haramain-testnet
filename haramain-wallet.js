@@ -313,7 +313,7 @@
   }
   function stats() {
     var R = get('rcpts', []), m = new Date(); m.setDate(1); m.setHours(0, 0, 0, 0);
-    var inn = 0, out = 0, n = 0; R.forEach(function (r) { if (r.ts >= m.getTime()) { n++; if (r.dir === 'in') inn += +r.amount; else out += +r.amount; } });
+    var inn = 0, out = 0, n = 0; R.forEach(function (r) { if (r.ts >= m.getTime() && !r.refund) { n++; if (r.dir === 'in') inn += +r.amount; else out += +r.amount; } });
     return { inn: +inn.toFixed(4), out: +out.toFixed(4), n: n };
   }
   function convert(from) {
