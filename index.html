@@ -3231,7 +3231,7 @@ function piLogin() {
     /* ✅ MAINNET */
     Pi.init({ version: "2.0", sandbox: window.PI_SANDBOX });
 
-    Pi.authenticate(['username', 'payments'], onIncompletePayment)
+    Pi.authenticate(['username', 'payments', 'wallet_address'], onIncompletePayment)
       .then(function(auth) {
         user = auth.user;
         window.HM_TOKEN = auth.accessToken;
