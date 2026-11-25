@@ -212,7 +212,7 @@
               api('/transfer', { a: 'payout', paymentId: pid }).then(function (x) {
                 if (x.ok && x.row && x.row.txid) return finish(x.row);
                 if (x.refunded && x.row) { if (saveRefund(x.row)) refundNote(x.row); redraw(); return step(3, '↩️ This transfer could not be delivered, so ' + num(amt, 7) + ' π was refunded to you automatically on the Pi blockchain.', 'err'); }
-                if (++tries < 40) { step(3, 'Paying @' + esc(to) + '… the Pi blockchain is busy, retrying automatically.'); setTimeout(retry, 8000); }
+                if (++tries < 40) { if (x.need_signin) step(3, '@' + esc(to) + ' needs to open Haramain and sign in again (tap Allow) to receive Pi. Your Pi is safe: it is delivered as soon as they do, or refunded to you automatically.', 'wait'); else step(3, 'Paying @' + esc(to) + '… the Pi blockchain is busy, retrying automatically.'); setTimeout(retry, 8000); }
                 else step(3, 'Your payment is safe and recorded on the Pi blockchain. Haramain keeps trying automatically: @' + esc(to) + ' is paid, or you are refunded, and you will be notified.', 'wait');
               }).catch(function () { if (++tries < 40) setTimeout(retry, 8000); });
             })();
