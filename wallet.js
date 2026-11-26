@@ -1358,7 +1358,7 @@
     },
     pay: function () {
       var pl = contacts().map(function (c) { return c.to; }).concat(get('payees', [])).filter(function (p, i, L) { return (isG(p) || userSends()) && L.map(function (q) { return q.toLowerCase(); }).indexOf(p.toLowerCase()) === i; });
-      return '<div class="ph"><h1>Services</h1><p>Payments, business, receipts and tools.</p></div>' +
+      return '<div class="ph"><h1>Tools</h1><p>Payments, business, receipts and tools.</p></div>' +
         '<div class="act-q sv-q">' + ic('search') + '<input class="in" id="sv-q" type="search" autocomplete="off" placeholder="Search services"></div>' +
         (pl.length ? '<div class="sec sv-again"><h2>Pay again</h2><button type="button" data-act="contacts">Contacts</button></div><div class="chips sv-again">' + pl.slice(0, 8).map(function (p) { return '<button type="button" class="chip" data-act="send-to" data-u="' + esc(p) + '">' + esc(cName(p) || toLabel(p)) + '</button>'; }).join('') + '</div>' : '') +
         SVC_G.map(function (g) { var L = SVC.filter(function (x) { return x.g === g[0]; }); return '<div class="sv-grp" data-g="' + g[0] + '"><div class="sec"><h2>' + g[1] + '</h2></div>' + svcGrid(L) + '</div>'; }).join('') +
@@ -1366,7 +1366,7 @@
     },
     wallet: function () {
       var c = curr();
-      return '<div class="ph"><h1>Wallet</h1><p>Live Pi rate in any currency, converter and blockchain tools.</p></div>' +
+      return '<div class="ph"><h1>Balance</h1><p>Live Pi rate in any currency, converter and blockchain tools.</p></div>' +
         '<div class="card" data-p="wchart">' + wChartHTML() + '</div>' +
         '<div class="sec"><h2>Converter</h2><button type="button" data-act="currency">' + esc(c) + ' ▾</button></div>' +
         '<div class="card conv"><label><span>π</span><input id="cv-pi" type="number" inputmode="decimal" value="1" aria-label="Pi"></label><label><span>USD</span><input id="cv-usd" type="number" inputmode="decimal" aria-label="US dollars"></label>' + (c !== 'USD' ? '<label><span>' + esc(c) + '</span><input id="cv-loc" type="number" inputmode="decimal" aria-label="' + esc(cname(c)) + '"></label>' : '') + (cur2() ? '<label class="cv-tr"><span>' + esc(cur2()) + '</span><input id="cv-tr" type="number" inputmode="decimal" aria-label="' + esc(cname(cur2())) + '"></label>' : '') + '</div>' + '<button type="button" class="lnk" data-act="travel" style="margin:8px 4px 0">' + ic('globe', 'width:15px;height:15px;vertical-align:-3px') + ' ' + (cur2() ? 'Travel currency: ' + esc(cname(cur2())) : 'Add a travel currency') + '</button>' +

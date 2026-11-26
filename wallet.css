@@ -826,3 +826,32 @@ html.fp-staff body>:not(#staffv):not(#toast):not(.sh-wrap):not(script):not(#netb
 @media (max-width:399px){#top .brand .bw{display:none}}
 @media (max-width:429px){#top .brand img{display:none}}
 #top .brand .bk{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.14);font-size:24px;line-height:1;margin-right:2px}
+
+/* ── the app's own bottom bar stays; wallet sections sit under the header ── */
+#top{flex-wrap:wrap;row-gap:0}
+#top .brand{flex:0 1 auto!important;margin-right:6px!important}
+#top .top-r{margin-left:auto}
+#top .brand .bn{flex:none;overflow:visible}
+#top .top-r{gap:6px}#top .tbtn,#top .avatar{width:38px!important;height:38px!important}
+@media (max-width:349px){#top .brand img{display:none!important}#top .top-r{gap:4px}#top .tbtn,#top .avatar{width:34px!important;height:34px!important}}
+#tabs{position:static!important;order:3;flex:1 0 100%;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;overflow:hidden;padding:10px 0 2px!important;margin:0;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;scrollbar-width:none;z-index:auto}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button,#tabs button.on{min-width:0;flex-direction:row!important;min-height:36px!important;padding:0 4px;border-radius:999px;background:rgba(255,255,255,.14);color:#fff!important;font-size:12.5px;font-weight:700!important;gap:6px;white-space:nowrap}
+#tabs button span.b,#tabs button.on span.b,#tabs button:nth-child(3) span.b,#tabs button:nth-child(3).on span.b{width:auto!important;height:auto!important;margin:0!important;background:none!important;box-shadow:none!important;border:0!important;transform:none!important;border-radius:0}
+#tabs button .ic,#tabs button:nth-child(3) span.b .ic{width:16px;height:16px}
+#tabs button.on{background:#fff!important;color:#07462F!important;box-shadow:0 6px 16px -10px rgba(0,0,0,.5)}
+#hostnav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;padding:6px 6px calc(8px + var(--safe-b));background:#fff;border-top:1px solid rgba(15,20,25,.08);box-shadow:0 -10px 30px -20px rgba(0,0,0,.35)}
+#hostnav a,#hostnav button{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:56px;justify-content:flex-end;color:#5B6470;font-size:12px;font-weight:600;text-decoration:none}
+#hostnav .ic{width:24px;height:24px}
+#hostnav .w span{width:62px;height:62px;margin-top:-30px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(145deg,#0A6B45,#07462F);border:3px solid #fff;box-shadow:0 0 0 2px #C9A84C,0 14px 26px -12px rgba(6,78,51,.8)}
+#hostnav .w{color:#0A6B45;font-weight:800}
+html.fp-staff #hostnav{display:none}
+#top .brand img,#top .brand img{display:block!important;width:30px;height:30px;border-radius:9px}
+#top .brand .bn{font-size:20px;letter-spacing:-.01em}
+#top .netb{display:none!important}
+.wl-load{display:flex;align-items:center;justify-content:center;min-height:50vh}
+.wl-load i{width:34px;height:34px;border-radius:50%;border:4px solid rgba(12,138,85,.18);border-top-color:#0A6B45;animation:wlspin .8s linear infinite}
+@keyframes wlspin{to{transform:rotate(360deg)}}
+@media (max-width:459px){#tabs button span.b{display:none!important}}
+@media (max-width:379px){#tabs button,#tabs button.on{font-size:11px;padding:0 2px;letter-spacing:-.01em}#tabs{gap:4px}}
+#hostnav .e{font-size:22px;line-height:24px;height:24px}
