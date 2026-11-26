@@ -8121,5 +8121,23 @@ function orderQurbani(){
 <script src="haramain-nav.js?v=5"></script>
 <script src="haramain-habit.js?v=1"></script>
 <script src="haramain-onboarding.js?v=3"></script>
+
+
+<script id="wallet-link">(function () {
+  /* Wallet: the full Haramain Wallet opens on its own page. Zakat, Sadaqah and Qurbani stay on this page. */
+  function W(h) { location.href = '/wallet.html' + (h || ''); }
+  var keep = false;
+  function install() {
+    var g = window.goS; if (g && !g.__wl) { window.goS = function (id) { if (id === 'payments' && !keep) return W(); return g.apply(this, arguments); }; window.goS.__wl = 1; }
+    var o = window.hmOpen; if (o && !o.__wl) { window.hmOpen = function (screen, util) { if (screen === 'payments' && util) { keep = true; try { return o.apply(this, arguments); } finally { keep = false; } } if (screen === 'payments') return W(); return o.apply(this, arguments); }; window.hmOpen.__wl = 1; }
+    window.hmBusiness = function () { W('#go=biz'); };
+    ['hmSendSheet', 'hmPay'].forEach(function (n) { window[n] = function () { W('#go=send'); }; });
+    ['hmGetPaid', 'hmRequestSheet'].forEach(function (n) { window[n] = function () { W('#go=receive'); }; });
+  }
+  install(); addEventListener('DOMContentLoaded', install); addEventListener('load', function () { install(); setTimeout(install, 0); setTimeout(install, 1500); });
+  // a tap on any Wallet button goes straight to the wallet page, before other screens run
+  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[onclick]'); if (!t) return; var c = t.getAttribute('onclick') || ''; if (/^\s*(goS|hmOpen)\('payments'\)\s*;?\s*$/.test(c)) { e.preventDefault(); e.stopPropagation(); W(); } else if (/hmOpen\('payments'\);\s*setTimeout\(hmBusiness/.test(c)) { e.preventDefault(); e.stopPropagation(); W('#go=biz'); } }, true);
+  if (/^#(payments|wallet)$/.test(location.hash)) W();
+})();</script>
 </body>
 </html>
