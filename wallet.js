@@ -553,6 +553,9 @@
   /* opened from the app with a task (#go=send, #go=receive, #go=biz …): done once signed in */
   var goAct = null;
   function runGo() { var a = goAct; goAct = null; if (a && A[a]) { try { A[a](); } catch (e) {} } }
+  /* inside the app (embedded): the app is signed in already, so the wallet signs in with it; shown on request */
+  function hostSigned() { try { return !!(window.WALLET_EMBED && parent.WALLET_HOST && parent.WALLET_HOST.signed()); } catch (e) { return false; } }
+  window.WALLET_SHOW = function (a) { if (!S.token && window.Pi && hostSigned()) signIn(true); if (a) { goAct = a; if (S.token) setTimeout(runGo, 150); } };
   function afterSignIn() { setTimeout(runGo, 350); askPush(); HK.signin.forEach(function (f) { try { f(); } catch (e) {} }); register(); historySync(); loadCfg().then(function () { sync(); if (pendingCode) { var c = pendingCode; pendingCode = null; openCode(c); } }); }
 
   /* ── transfers: server status, registration, sync ── */
@@ -2140,7 +2143,7 @@
     loadPrice(true); paintPrice(); initPi(); loadCfg(); checkRems(); netBar(); importHost(); if (!/[?&]staff=/.test(location.search)) { S.guest = true; showApp(); } var gq = /#go=([a-z-]+)/.exec(location.hash); if (gq) { goAct = gq[1]; try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} setTimeout(runGo, window.Pi ? 4000 : 300); }
     restoreLocal().then(function (n) { if (n) { MEMO = {}; try { render(S.tab); } catch (e) {} toast('Your records were restored on this phone'); } else mirrorSoon(); });
     var u = get('user', null);
-    if (window.Pi) signIn(true);
+    if (window.Pi && (!window.WALLET_EMBED || hostSigned())) signIn(true);
     checkPendingWallet(); checkPendingInApp();
     var hc = readHash(); if (hc) { pendingCode = hc; var lm = $('#ld-msg'); if (lm) { lm.style.color = 'var(--blue)'; lm.textContent = 'You opened a payment request. Sign in with Pi or explore to pay it.'; } }
     addEventListener('hashchange', function () { var c = readHash(); if (c) { if ($('#app').hidden) { pendingCode = c; } else openCode(c); } });

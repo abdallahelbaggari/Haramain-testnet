@@ -8124,6 +8124,8 @@ function orderQurbani(){
 
 
 
+
+
 <style id="wallet-link-css">#wl-open{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;background:rgba(6,30,20,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}#wl-open.on{display:flex}#wl-open .wl-b{display:flex;align-items:center;gap:12px;padding:16px 22px;border-radius:18px;background:#fff;color:#07462F;font:700 16px/1.2 Poppins,system-ui,sans-serif;box-shadow:0 20px 50px -20px rgba(0,0,0,.5)}#wl-open i{width:22px;height:22px;border-radius:50%;border:3px solid #0A6B4533;border-top-color:#0A6B45;animation:wlspin .8s linear infinite}@keyframes wlspin{to{transform:rotate(360deg)}}</style><script id="wallet-link">(function () {
   /* Wallet: the full Haramain Wallet opens on its own page. Zakat, Sadaqah and Qurbani stay on this page. */
   var going = 0;
@@ -8137,7 +8139,7 @@ function orderQurbani(){
   }
   addEventListener('pageshow', function () { var o = document.getElementById('wl-open'); if (o) o.className = ''; going = 0; });
   // the wallet is made ready in the background, so it opens at once even on a slow connection
-  addEventListener('load', function () { setTimeout(function () { var c = navigator.connection; if (c && c.saveData) return; ["/wallet", "/wallet.css?v=35", "/wallet-i18n.js?v=6", "/wallet-qr.js?v=1", "/wallet-receipt.js?v=5", "/wallet.js?v=49", "/wallet-bar.js?v=1", "/wallet-biz.js?v=19"].forEach(function (u, i) { setTimeout(function () { try { fetch(u, { credentials: 'same-origin' }).catch(function () {}); } catch (e) {} }, i * 400); }); }, 5000); });
+  addEventListener('load', function () { setTimeout(function () { var c = navigator.connection; if (c && c.saveData) return; ["/wallet"].forEach(function (u, i) { setTimeout(function () { try { fetch(u, { credentials: 'same-origin' }).catch(function () {}); } catch (e) {} }, i * 400); }); }, 5000); });
   var keep = false;
   function install() {
     var g = window.goS; if (g && !g.__wl) { window.goS = function (id) { if (id === 'payments' && !keep) return W(); return g.apply(this, arguments); }; window.goS.__wl = 1; }
