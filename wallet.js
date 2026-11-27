@@ -152,7 +152,7 @@
   function cname(c) { try { return DN ? DN.of(c) : c; } catch (e) { return c; } }
   function money(v, c, dp) {
     if (v == null || isNaN(v)) return '—';
-    var d = dp != null ? dp : (Math.abs(v) >= 1000 ? 0 : Math.abs(v) >= 1 ? 2 : 4);
+    var d = dp != null ? dp : (v === 0 || Math.abs(v) >= 1000 ? (v === 0 ? 2 : 0) : Math.abs(v) >= 1 ? 2 : 4);
     try { return new Intl.NumberFormat('en-US', { style: 'currency', currency: c, currencyDisplay: 'narrowSymbol', minimumFractionDigits: d, maximumFractionDigits: d }).format(v); }
     catch (e) { return c + ' ' + Number(v).toFixed(d); }
   }
@@ -605,7 +605,7 @@
       loadCfg();
       sheet('Sending is not available yet', '<div class="note warn">' + ic('info') + '<span>Haramain is finishing its secure payment setup. Sending will open here automatically as soon as it is ready. Nothing has been charged.</span></div>' +
         '<div class="card" style="margin-top:12px"><h3>Meanwhile you can</h3><p>• Receive Pi with your @username or wallet address<br>• Check the live Pi rate and convert<br>• See your wallet balance and receipts</p></div>' +
-        '<button type="button" class="btn" data-act="receive">' + ic('req') + 'Receive Pi</button><button type="button" class="btn ghost" data-act="status">' + ic('shield') + 'System status</button>');
+        '<button type="button" class="btn" data-act="receive">' + ic('req') + 'Receive Pi</button>');
       return false;
     }
     if (!window.Pi || !initPi()) { toast('Open Haramain in the Pi Browser to pay'); return false; }
@@ -1389,12 +1389,12 @@
         '<div class="sec"><h2>Settings</h2></div><div class="list">' +
         row('edit', 'Name on receipts', get('name', '') ? NTYPE[nType()].l + ' · ' + get('name', '') : 'Your name, business, store or shop', 'name') + row('globe', 'Currency', cname(curr()) + ' (' + curr() + ')', 'currency') + (window.FPL && Object.keys(FPL.LANGS).length > 1 ? row('globe', 'Language', FPL.LANGS[FPL.lang()], 'lang') : '') + (canInstall() ? row('down', 'Install Haramain', 'Add to home screen', 'install') : '') +
         row('bell', 'Notifications', !('Notification' in window) ? 'In-app alerts on' : get('push', false) ? 'Phone and in-app alerts' : 'In-app alerts on', 'push') + row('pie', 'Monthly budget', get('budget', 0) ? fpi(get('budget', 0)) + ' π' : 'Not set', 'budget') + row('card', 'Wallet address', get('addr', '') ? short(get('addr', '')) : 'Not added', 'addr-set') + hook('settings') + '</div>' +
-        '<div class="sec"><h2>Support</h2></div><div class="list">' + row('info', 'Welcome tour', 'A quick look at Haramain', 'tour') +
+        '<div class="sec"><h2>Support</h2></div><div class="list">' +
         row('shield', 'Trust center', 'Payments, limits and records', 'security') + row('refresh', 'Reset', 'Pending payment or a problem? Reset fixes it', 'repair') + row('heart', sup ? 'You are a Supporter' : 'Become a Supporter', sup ? 'Thank you!' : '1 π · Supporter badge', 'supporter') +
         row('mail', 'Help & contact', 'Contact the Haramain team', 'help') + '</div>' +
         '<div class="sec"><h2>Legal</h2></div><div class="list">' + lrow('Terms of Service', 'terms-of-service.html') + lrow('Privacy Policy', 'privacy-policy.html') + '</div>' +
         (signedIn() ? '<button type="button" class="btn danger" data-act="signout" style="margin-top:18px">' + ic('out') + 'Sign out</button>' : '') +
-        '<p class="small muted" style="text-align:center;margin-top:16px">Haramain 1.1.0 · ' + NETN + ' · haramain.pi</p>';
+        '<p class="small muted" style="text-align:center;margin-top:16px">Haramain Wallet 1.2.0 · ' + NETN + ' · haramain.pi</p>';
       function row(i, t, s, a) { return '<button type="button" class="li" data-act="' + a + '"><span class="ico">' + ic(i) + '</span><span class="grow"><b>' + esc(t) + '</b><small>' + esc(s) + '</small></span><span class="go">' + ic('chev') + '</span></button>'; }
       function lrow(t, h) { return '<a class="li" href="' + h + '"><span class="ico">' + ic('rcpt') + '</span><span class="grow"><b>' + t + '</b></span><span class="go">' + ic('chev') + '</span></a>'; }
     }
@@ -2149,7 +2149,7 @@
     addEventListener('hashchange', function () { var c = readHash(); if (c) { if ($('#app').hidden) { pendingCode = c; } else openCode(c); } });
     var bgN = 0; setInterval(function () { if (!document.hidden) { loadPrice(); sync(); checkPendingWallet(); checkPendingInApp(); checkRems(); } else if (++bgN % 2 === 0) { sync(); checkRems(); } }, 60000);
     document.addEventListener('visibilitychange', function () { if (!document.hidden) { loadPrice(); sync(); checkPendingWallet(); checkPendingInApp(); checkRems(); } });
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function () {}); navigator.serviceWorker.ready.then(function (reg) { setTimeout(function () { try { var o = location.origin, L = [location.pathname + location.search].concat(performance.getEntriesByType('resource').map(function (x) { return x.name; }).filter(function (x) { return x.indexOf(o + '/') === 0 && !/\.(mp4|webm|mp3)(\?|$)/.test(x); }).map(function (x) { return x.slice(o.length); })); if (reg.active) reg.active.postMessage({ warm: L }); } catch (e) {} }, 3000); }); }
   }
   window.Haramain = { S: S, render: render, sync: sync, showRcpt: showRcpt, sendSheet: sendSheet,
     kit: { HK: HK, P: P, A: A, T: T, get: get, put: put, esc: esc, ic: ic, toast: toast, sheet: sheet, closeSheets: closeSheets, copy: copy, fpi: fpi, conv: conv, money: money, rateIn: rateIn, curr: curr, short: short, r7: r7,
